@@ -40,7 +40,13 @@ function Products() {
     const fetchProducts = async () => {
         try {
             setLoading(true)
-            const query = new URLSearchParams({ search, sort, max, min page: String(page) })
+            const query = new URLSearchParams({
+                search,
+                sort,
+                max: String(max),
+                min: String(min),
+                page: String(page),
+            });
             const res = await axios.get(`http://localhost:8080/products?${query}`)
             setProducts(res.data)
         } catch (err) {
@@ -82,9 +88,10 @@ function Products() {
                             <select onChange={(event) => {
                                 let str = event.target.value
                                 let result = str.split(" ")
-                                setMax(result[0])
-                                setMin(result[1])
+                                setMax(Number(result[0]))
+                                setMin(Number(result[1]))
                             }}>
+                                <option>select price range</option>
                                 <option value="1500 500">1500 - 500</option>
                                 <option value="500 0">500 - 0</option>
                             </select>
