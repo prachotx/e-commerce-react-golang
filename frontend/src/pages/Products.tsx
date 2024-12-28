@@ -40,6 +40,7 @@ function Products() {
     const fetchProducts = async () => {
         try {
             setLoading(true)
+            setError(null)
             const query = new URLSearchParams({
                 search,
                 sort,
@@ -63,10 +64,10 @@ function Products() {
 
     useEffect(() => {
         fetchProducts()
-    }, [sort, page])
+    }, [sort, page, max, min])
 
     return (
-        <main>
+        <main className="bg-gray-200 h-screen">
             <Navbar />
             <div>
                 <Wrapper>
@@ -75,13 +76,13 @@ function Products() {
                         <span><IoIosArrowForward /></span>
                         <span>shop</span>
                     </div>
-                    <div className="bg-gray-100 p-4 rounded">
+                    <div className="bg-white p-4 rounded">
                         <form onSubmit={handleSubmit} className="flex items-center justify-end">
-                            <div className=" bg-white flex items-center rounded ">
+                            <div className="flex items-center rounded border-2 border-gray-300">
                                 <input type="text" onChange={event => setSearch(event.target.value)} className="outline-none px-2 rounded-full" />
-                                <button type="submit" className="bg-violet-500 text-white text-lg p-2 rounded"><BiSearch /></button>
+                                <button type="submit" className="bg-gray-300 text-lg p-2"><BiSearch /></button>
                             </div>
-                            <select onChange={event => setSort(event.target.value)} className="ml-4">
+                            <select onChange={event => setSort(event.target.value)} className="ml-4 border-2 border-gray-300 rounded p-1">
                                 <option value="desc">Highest Price</option>
                                 <option value="asc">Lowest Price</option>
                             </select>
@@ -90,8 +91,8 @@ function Products() {
                                 let result = str.split(" ")
                                 setMax(Number(result[0]))
                                 setMin(Number(result[1]))
-                            }}>
-                                <option>select price range</option>
+                            }} className="ml-4 border-2 border-gray-300 rounded p-1">
+                                <option value="0 0">Select Price Range</option>
                                 <option value="1500 500">1500 - 500</option>
                                 <option value="500 0">500 - 0</option>
                             </select>

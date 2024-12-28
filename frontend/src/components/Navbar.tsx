@@ -4,9 +4,9 @@ import { PiShoppingCart } from "react-icons/pi";
 
 function Navbar() {
   return (
-    <nav className="bg-violet-600">
+    <nav className="bg-white">
       <Wrapper>
-        <div className="flex items-center justify-between h-20 text-white">
+        <div className="flex items-center justify-between h-20">
           <h1 className="flex items-center">
             <img width={50} height={50} src="https://www.svgrepo.com/show/377473/pixelarticons.svg" alt="" />
             <span className="text-2xl ml-2">Joyman</span>
@@ -29,7 +29,7 @@ function Navbar() {
             <Link to="/cart">
               <PiShoppingCart className="text-3xl mr-8" />
             </Link>
-            <Link to="/login" className="bg-orange-400 w-20 h-10 flex items-center justify-center rounded">
+            <Link to="/login" className="bg-gray-300 w-20 h-10 flex items-center justify-center rounded">
               Login
             </Link>
           </div>

@@ -40,7 +40,7 @@ const ProductByID = () => {
     }, [])
 
     return (
-        <main>
+        <main className="bg-gray-200">
             <Navbar />
             <div>
                 <Wrapper>
