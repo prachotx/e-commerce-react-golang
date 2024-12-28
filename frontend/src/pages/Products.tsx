@@ -67,7 +67,7 @@ function Products() {
     }, [sort, page, max, min])
 
     return (
-        <main className="bg-gray-200 h-screen">
+        <main className="bg-gray-200">
             <Navbar />
             <div>
                 <Wrapper>

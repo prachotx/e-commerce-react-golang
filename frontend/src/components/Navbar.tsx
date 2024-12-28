@@ -1,8 +1,12 @@
 import Wrapper from "./layout/Wrapper"
 import { Link } from "react-router";
 import { PiShoppingCart } from "react-icons/pi";
+import { useAuth } from "../provider/authProvider";
+import Profile from "./Profile";
 
-function Navbar() {
+const Navbar = () => {
+  const { token } = useAuth()
+
   return (
     <nav className="bg-white">
       <Wrapper>
@@ -29,9 +33,13 @@ function Navbar() {
             <Link to="/cart">
               <PiShoppingCart className="text-3xl mr-8" />
             </Link>
-            <Link to="/login" className="bg-gray-300 w-20 h-10 flex items-center justify-center rounded">
-              Login
-            </Link>
+            {token ? (
+              <Profile />
+            ) : (
+              <Link to="/login" className="bg-gray-300 w-20 h-10 flex items-center justify-center rounded">
+                Login
+              </Link>
+            )}
           </div>
         </div>
       </Wrapper>
