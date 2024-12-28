@@ -64,6 +64,7 @@ func LoginUser(c *fiber.Ctx) error {
 	token := jwt.New(jwt.SigningMethodHS256)
 	claims := token.Claims.(jwt.MapClaims)
 	claims["user_id"] = user.ID
+	claims["username"] = user.Username
 	claims["role"] = user.Role
 	claims["exp"] = time.Now().Add(time.Hour * 72).Unix()
 
@@ -81,7 +82,10 @@ func LoginUser(c *fiber.Ctx) error {
 		SameSite: "None",
 	})
 
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{"message": "login success !"})
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{
+		"message": "login success !",
+		"token":   token,
+	})
 }
 
 func GetUser(c *fiber.Ctx) error {

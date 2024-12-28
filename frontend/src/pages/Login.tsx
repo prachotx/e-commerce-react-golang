@@ -2,8 +2,10 @@ import axios, { AxiosError } from "axios"
 import { FormEvent, useRef, useState } from "react"
 import LayoutLogin from "../components/layout/LayoutLogin"
 import { Link, useNavigate } from "react-router"
+import { useAuth } from "../provider/authProvider"
 
 function Login() {
+    const { setToken } = useAuth()
     const [email, setEmail] = useState<string>("")
     const [password, setPassword] = useState<string>("")
     const [loading, setLoading] = useState<boolean>(false)
@@ -16,11 +18,13 @@ function Login() {
         event.preventDefault();
         try {
             setLoading(true)
-            await axios.post(
+            const res = await axios.post(
                 "http://localhost:8080/users/login",
                 { email, password },
                 { withCredentials: true }
             );
+            const token = res.data.token
+            setToken(token)
             navigate("/")
         } catch (err) {
             const message = getErrorMessage(err)

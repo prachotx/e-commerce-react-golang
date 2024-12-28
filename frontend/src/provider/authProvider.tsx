@@ -14,16 +14,19 @@ interface User {
     exp: number;
     role: string;
     user_id: number;
+    username: string
 }
 
 interface AuthContextType {
     token: string | null
+    setToken: (newToken: string) => void
     user: User | null
     logout: () => void
 }
 
 const AuthContext = createContext<AuthContextType>({
     token: null,
+    setToken: () => {},
     user: null,
     logout: () => {},
 });
@@ -51,6 +54,10 @@ const AuthProvider = ({ children }: Props) => {
         }
     }, [token])
 
+    const setToken = (newToken: string) => {
+        setToken_(newToken)
+    }
+
     const logout = () => {
         Cookies.remove("jwt")
         setToken_(null)
@@ -60,6 +67,7 @@ const AuthProvider = ({ children }: Props) => {
     const contextValue = useMemo(() => (
         {
             token,
+            setToken,
             user,
             logout
         }
