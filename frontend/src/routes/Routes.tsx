@@ -41,6 +41,10 @@ const Routes = () => {
           path: "/cart",
           element: <div>Cart Page</div>,
         },
+        {
+          path: "/users",
+          element: <div>users</div>,
+        }
       ],
     },
   ];
