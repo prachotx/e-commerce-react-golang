@@ -7,6 +7,8 @@ import RoleBasedRoute from "./RoleBasedRoute";
 import Register from "../pages/Register";
 import Products from "../pages/Products";
 import ProductByID from "../pages/ProductByID";
+import Account from "../pages/Account";
+import Address from "../pages/Address";
 
 const Routes = () => {
   const routesForPublic = [
@@ -42,8 +44,12 @@ const Routes = () => {
           element: <div>Cart Page</div>,
         },
         {
-          path: "/users",
-          element: <div>users</div>,
+          path: "/account",
+          element: <Account />,
+        },
+        {
+          path: "/account/address",
+          element: <Address />,
         }
       ],
     },

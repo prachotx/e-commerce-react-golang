@@ -24,8 +24,8 @@ const Profile = () => {
             <div ref={divRef} className="absolute bottom-[-48px] left-0 hidden bg-red-300 w-full text-center rounded-b cursor-pointer">
                 <ul>
                     <li>
-                        <Link to="/users">
-                        Add Address
+                        <Link to="/account">
+                            Account
                         </Link>
                     </li>
                     <li onClick={() => {
