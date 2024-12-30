@@ -15,7 +15,7 @@ const Address = () => {
         event.preventDefault()
         const address = `จังหวัด ${province} อำเภอ ${district} ตำบล ${subDistrict} บ้านเลขที่ ${houseNumber} หมู่ ${village} รหัสไปรษณีย์ ${postalCode}`
         console.log(address);
-        
+
     }
 
     return (
@@ -23,46 +23,47 @@ const Address = () => {
             <Navbar />
             <div>
                 <Wrapper>
-                    <div>
-                        <div className="flex items-center text-lg py-2">
+                    <div className="py-4">
+                        <div className="flex items-center text-lg mb-4">
                             <span>home</span>
                             <span><IoIosArrowForward /></span>
                             <span>account</span>
                             <span><IoIosArrowForward /></span>
                             <span>address</span>
                         </div>
-                        <form onSubmit={handleSubmit}>
-                            <h2>Add Address</h2>
-                            <label>Province:</label>
-                            <select onChange={event => setProvince(event.target.value)}>
-                                <option value="นครพนม">Province 1</option>
-                                <option value="2asdasd">Province 2</option>
-                            </select>
-                            <br />
-                            <label>District:</label>
-                            <select onChange={event => setDistrict(event.target.value)}>
-                                <option value="ธาตุพนท">District 1</option>
-                                <option value="2asdasd">District 2</option>
-                            </select>
-                            <br />
-                            <label>Subdistrict:</label>
-                            <select onChange={event => setSubDistrict(event.target.value)}>
-                                <option value="เหนือ">Subdistrict 1</option>
-                                <option value="2asdasd">Subdistrict 2</option>
-                            </select>
-                            <br />
-                            <label>House Number:</label>
-                            <input type="text" onChange={event => setHouseNumber(event.target.value)} />
-                            <br />
-                            <label>Village:</label>
-                            <input type="text" onChange={event => setVillage(event.target.value)} />
-                            <br />
-                            <label >Postal Code:</label>
-                            <input type="text" onChange={event => setPostalCode(event.target.value)} />
-                            <br />
-                            <button type="submit">Submit</button>
-                        </form>
-
+                        <div className="bg-white p-4 rounded">
+                            <form onSubmit={handleSubmit}>
+                                <h2>Add Address</h2>
+                                <label>Province:</label>
+                                <select onChange={event => setProvince(event.target.value)}>
+                                    <option value="นครพนม">Province 1</option>
+                                    <option value="2asdasd">Province 2</option>
+                                </select>
+                                <br />
+                                <label>District:</label>
+                                <select onChange={event => setDistrict(event.target.value)}>
+                                    <option value="ธาตุพนท">District 1</option>
+                                    <option value="2asdasd">District 2</option>
+                                </select>
+                                <br />
+                                <label>Subdistrict:</label>
+                                <select onChange={event => setSubDistrict(event.target.value)}>
+                                    <option value="เหนือ">Subdistrict 1</option>
+                                    <option value="2asdasd">Subdistrict 2</option>
+                                </select>
+                                <br />
+                                <label>House Number:</label>
+                                <input type="text" onChange={event => setHouseNumber(event.target.value)} />
+                                <br />
+                                <label>Village:</label>
+                                <input type="text" onChange={event => setVillage(event.target.value)} />
+                                <br />
+                                <label >Postal Code:</label>
+                                <input type="text" onChange={event => setPostalCode(event.target.value)} />
+                                <br />
+                                <button type="submit">Submit</button>
+                            </form>
+                        </div>
                     </div>
                 </Wrapper>
             </div>

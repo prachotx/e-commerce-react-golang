@@ -44,13 +44,13 @@ const ProductByID = () => {
             <Navbar />
             <div>
                 <Wrapper>
-                    <div>
-                        <div className="flex items-center text-lg py-2">
+                    <div className="py-4">
+                        <div className="flex items-center text-lg mb-4">
                             <span>home</span>
                             <span><IoIosArrowForward /></span>
                             <span>shop</span>
                         </div>
-                        <div>
+                        <div className="bg-white p-4 rounded">
                             {loading ? (
                                 <div>loading...</div>
                             ) : error ? (

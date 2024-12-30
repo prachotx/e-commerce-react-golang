@@ -71,46 +71,48 @@ function Products() {
             <Navbar />
             <div>
                 <Wrapper>
-                    <div className="flex items-center text-lg py-2">
-                        <span>home</span>
-                        <span><IoIosArrowForward /></span>
-                        <span>shop</span>
-                    </div>
-                    <div className="bg-white p-4 rounded">
-                        <form onSubmit={handleSubmit} className="flex items-center justify-end">
-                            <div className="flex items-center rounded border-2 border-gray-300">
-                                <input type="text" onChange={event => setSearch(event.target.value)} className="outline-none px-2 rounded-full" />
-                                <button type="submit" className="bg-gray-300 text-lg p-2"><BiSearch /></button>
-                            </div>
-                            <select onChange={event => setSort(event.target.value)} className="ml-4 border-2 border-gray-300 rounded p-1">
-                                <option value="desc">Highest Price</option>
-                                <option value="asc">Lowest Price</option>
-                            </select>
-                            <select onChange={(event) => {
-                                let str = event.target.value
-                                let result = str.split(" ")
-                                setMax(Number(result[0]))
-                                setMin(Number(result[1]))
-                            }} className="ml-4 border-2 border-gray-300 rounded p-1">
-                                <option value="0 0">Select Price Range</option>
-                                <option value="1500 500">1500 - 500</option>
-                                <option value="500 0">500 - 0</option>
-                            </select>
-                        </form>
-                        {loading ? (
-                            <div>Loading...</div>
-                        ) : error ? (
-                            <div>{error}</div>
-                        ) : (
-                            <>
-                                <div className="grid grid-cols-4 gap-4 mt-4">
-                                    {products?.products.map((item) => (
-                                        <ProductList key={item.id} id={item.id} name={item.name} price={item.price} />
-                                    ))}
+                    <div className="py-4">
+                        <div className="flex items-center text-lg mb-4">
+                            <span>home</span>
+                            <span><IoIosArrowForward /></span>
+                            <span>shop</span>
+                        </div>
+                        <div className="bg-white p-4 rounded">
+                            <form onSubmit={handleSubmit} className="flex items-center justify-end">
+                                <div className="flex items-center rounded border-2 border-gray-300">
+                                    <input type="text" onChange={event => setSearch(event.target.value)} className="outline-none px-2 rounded-full" />
+                                    <button type="submit" className="bg-gray-300 text-lg p-2"><BiSearch /></button>
                                 </div>
-                                <Pagination page={products?.page || 1} total_page={products?.total_page || 1} setPage={setPage} />
-                            </>
-                        )}
+                                <select onChange={event => setSort(event.target.value)} className="ml-4 border-2 border-gray-300 rounded p-1">
+                                    <option value="desc">Highest Price</option>
+                                    <option value="asc">Lowest Price</option>
+                                </select>
+                                <select onChange={(event) => {
+                                    let str = event.target.value
+                                    let result = str.split(" ")
+                                    setMax(Number(result[0]))
+                                    setMin(Number(result[1]))
+                                }} className="ml-4 border-2 border-gray-300 rounded p-1">
+                                    <option value="0 0">Select Price Range</option>
+                                    <option value="1500 500">1500 - 500</option>
+                                    <option value="500 0">500 - 0</option>
+                                </select>
+                            </form>
+                            {loading ? (
+                                <div>Loading...</div>
+                            ) : error ? (
+                                <div>{error}</div>
+                            ) : (
+                                <>
+                                    <div className="grid grid-cols-4 gap-4 mt-4">
+                                        {products?.products.map((item) => (
+                                            <ProductList key={item.id} id={item.id} name={item.name} price={item.price} />
+                                        ))}
+                                    </div>
+                                    <Pagination page={products?.page || 1} total_page={products?.total_page || 1} setPage={setPage} />
+                                </>
+                            )}
+                        </div>
                     </div>
                 </Wrapper>
             </div>

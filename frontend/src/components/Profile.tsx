@@ -21,7 +21,7 @@ const Profile = () => {
                 <span>{user?.username}</span>
                 <FiUser className="text-xl ml-2" />
             </div>
-            <div ref={divRef} className="absolute bottom-[-48px] left-0 hidden bg-red-300 w-full text-center rounded-b cursor-pointer">
+            <div ref={divRef} className="absolute bottom-[-48px] left-0 hidden bg-white border-2 border-gray-300 w-full text-center rounded-b cursor-pointer">
                 <ul>
                     <li>
                         <Link to="/account">

@@ -47,7 +47,7 @@ const Account = () => {
             <div>
                 <Wrapper>
                     <div className="py-4">
-                        <div className="flex items-center text-lg py-2">
+                        <div className="flex items-center text-lg mb-4">
                             <span>home</span>
                             <span><IoIosArrowForward /></span>
                             <span>account</span>
