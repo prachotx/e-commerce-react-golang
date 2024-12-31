@@ -3,10 +3,10 @@ package main
 import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
-	"github.com/prachotx/e-commerce-xs/database"
-	"github.com/prachotx/e-commerce-xs/handler"
-	"github.com/prachotx/e-commerce-xs/middleware"
-	"github.com/prachotx/e-commerce-xs/model"
+	"github.com/prachotx/e-commerce-react-golang/database"
+	"github.com/prachotx/e-commerce-react-golang/handler"
+	"github.com/prachotx/e-commerce-react-golang/middleware"
+	"github.com/prachotx/e-commerce-react-golang/model"
 )
 
 func main() {

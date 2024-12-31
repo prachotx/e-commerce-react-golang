@@ -4,8 +4,8 @@ import (
 	"errors"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/prachotx/e-commerce-xs/database"
-	"github.com/prachotx/e-commerce-xs/model"
+	"github.com/prachotx/e-commerce-react-golang/database"
+	"github.com/prachotx/e-commerce-react-golang/model"
 	"gorm.io/gorm"
 )
 

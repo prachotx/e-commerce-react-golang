@@ -9,8 +9,8 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v4"
 	"github.com/joho/godotenv"
-	"github.com/prachotx/e-commerce-xs/database"
-	"github.com/prachotx/e-commerce-xs/model"
+	"github.com/prachotx/e-commerce-react-golang/database"
+	"github.com/prachotx/e-commerce-react-golang/model"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 )
