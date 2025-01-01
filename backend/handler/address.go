@@ -2,6 +2,7 @@ package handler
 
 import (
 	"errors"
+	"fmt"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/prachotx/e-commerce-react-golang/database"
@@ -41,6 +42,7 @@ func GetUserAddressByID(c *fiber.Ctx) error {
 
 func CreateUserAddress(c *fiber.Ctx) error {
 	userID := convertToUint(c.Locals("user_id"))
+	fmt.Print(userID)
 
 	var address model.Address
 	if err := c.BodyParser(&address); err != nil {

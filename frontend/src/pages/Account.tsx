@@ -17,8 +17,18 @@ interface User {
     updated_at: string;
 }
 
+// interface Address {
+//     id: number
+//     user_id: number
+//     user: User
+//     address: string
+//     created_at: string;
+//     updated_at: string;
+// }
+
 const Account = () => {
     const [user, setUser] = useState<User | null>()
+    const [address, setAddress] = useState<any[]>([])
     const [loading, setLoading] = useState<boolean>(false)
     const [error, setError] = useState<string | null>(null)
 
@@ -37,8 +47,24 @@ const Account = () => {
         }
     }
 
+    const fetchAddress = async () => {
+        try {
+            setLoading(true)
+            setError(null)
+            const res = await axios.get("http://localhost:8080/users/address", {
+                withCredentials: true
+            })
+            setAddress(res.data)
+        } catch (err) {
+            setError(getErrorMessage(err))
+        } finally {
+            setLoading(false)
+        }
+    }
+
     useEffect(() => {
         fetchUser()
+        fetchAddress()
     }, [])
 
     return (
@@ -58,11 +84,18 @@ const Account = () => {
                             ) : error ? (
                                 <div>{error}</div>
                             ) : (
-                                <div>
-                                    <div>{user?.username}</div>
-                                    <div>{user?.email}</div>
-                                    <div>{user?.role}</div>
-                                </div>
+                                <>
+                                    <div>
+                                        <div>{user?.username}</div>
+                                        <div>{user?.email}</div>
+                                        <div>{user?.role}</div>
+                                    </div>
+                                    {address?.map((item) => (
+                                        <div key={item.id} className="bg-green-300 h-[100px] flex items-center justify-center">
+                                            <div>{item.address}</div>
+                                        </div>
+                                    ))}
+                                </>
                             )}
                             <div>
                                 <Link to="/account/address">
@@ -72,7 +105,6 @@ const Account = () => {
                                 </Link>
                             </div>
                         </div>
-
                     </div>
                 </Wrapper>
             </div>

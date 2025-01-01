@@ -2,6 +2,7 @@ import { FormEvent, useState } from "react";
 import Wrapper from "../components/layout/Wrapper"
 import Navbar from "../components/Navbar"
 import { IoIosArrowForward } from "react-icons/io";
+import axios from "axios";
 
 const Address = () => {
     const [province, setProvince] = useState<string>(""); // จังหวัด
@@ -11,10 +12,18 @@ const Address = () => {
     const [village, setVillage] = useState<string>(""); // หมู่
     const [postalCode, setPostalCode] = useState<string>(""); // รหัสไปรษณีย์
 
-    const handleSubmit = (event: FormEvent) => {
+    const handleSubmit = async (event: FormEvent) => {
         event.preventDefault()
         const address = `จังหวัด ${province} อำเภอ ${district} ตำบล ${subDistrict} บ้านเลขที่ ${houseNumber} หมู่ ${village} รหัสไปรษณีย์ ${postalCode}`
-        console.log(address);
+        try {
+            await axios.post("http://localhost:8080/users/address",
+                { address },
+                { withCredentials: true }
+            )
+            alert("ok")
+        } catch (err) {
+            console.log(err);
+        }
 
     }
 
