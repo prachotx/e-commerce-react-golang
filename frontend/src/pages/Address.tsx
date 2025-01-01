@@ -3,6 +3,7 @@ import Wrapper from "../components/layout/Wrapper"
 import Navbar from "../components/Navbar"
 import { IoIosArrowForward } from "react-icons/io";
 import axios from "axios";
+import { useNavigate } from "react-router";
 
 const Address = () => {
     const [province, setProvince] = useState<string>(""); // จังหวัด
@@ -11,6 +12,7 @@ const Address = () => {
     const [houseNumber, setHouseNumber] = useState<string>(""); // บ้านเลขที่
     const [village, setVillage] = useState<string>(""); // หมู่
     const [postalCode, setPostalCode] = useState<string>(""); // รหัสไปรษณีย์
+    const navigate = useNavigate()
 
     const handleSubmit = async (event: FormEvent) => {
         event.preventDefault()
@@ -21,6 +23,7 @@ const Address = () => {
                 { withCredentials: true }
             )
             alert("ok")
+            navigate("/account")
         } catch (err) {
             console.log(err);
         }

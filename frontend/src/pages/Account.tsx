@@ -6,6 +6,7 @@ import { getErrorMessage } from "../utils/errorHandler"
 import { IoIosArrowForward } from "react-icons/io";
 import { IoMdAdd } from "react-icons/io";
 import { Link } from "react-router"
+import AddressList from "../components/AddressList"
 
 interface User {
     id: number
@@ -85,21 +86,21 @@ const Account = () => {
                                 <div>{error}</div>
                             ) : (
                                 <>
-                                    <div>
+                                    <div className="mb-4">
                                         <div>{user?.username}</div>
                                         <div>{user?.email}</div>
                                         <div>{user?.role}</div>
                                     </div>
-                                    {address?.map((item) => (
-                                        <div key={item.id} className="bg-green-300 h-[100px] flex items-center justify-center">
-                                            <div>{item.address}</div>
-                                        </div>
-                                    ))}
+                                    <div>
+                                        {address?.map((item) => (
+                                           <AddressList key={item.id} id={item.id} address={item.address} fetchAddress={fetchAddress} />
+                                        ))}
+                                    </div>
                                 </>
                             )}
                             <div>
                                 <Link to="/account/address">
-                                    <div className="bg-green-300 h-[100px] flex items-center justify-center">
+                                    <div className="border-2 border-gray-300 rounded h-[100px] flex items-center justify-center">
                                         <IoMdAdd />
                                     </div>
                                 </Link>
