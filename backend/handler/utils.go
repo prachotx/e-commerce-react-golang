@@ -16,7 +16,6 @@ func convertToUint(userIDInterface interface{}) uint {
 	return uint(userIDFloat)
 }
 
-// ตรวจสอบ MIME Type
 func isValidImage(file *multipart.FileHeader) bool {
 	openedFile, err := file.Open()
 	if err != nil {
@@ -24,19 +23,16 @@ func isValidImage(file *multipart.FileHeader) bool {
 	}
 	defer openedFile.Close()
 
-	// อ่าน header ของไฟล์ (4 bytes แรก)
 	buf := make([]byte, 512)
 	_, err = openedFile.Read(buf)
 	if err != nil {
 		return false
 	}
 
-	// ตรวจสอบ MIME type
 	mimeType := http.DetectContentType(buf)
 	return mimeType == "image/jpeg" || mimeType == "image/png" || mimeType == "image/gif"
 }
 
-// ตรวจสอบส่วนขยายไฟล์
 func isAllowedExtension(filename string) bool {
 	ext := strings.ToLower(filepath.Ext(filename))
 	allowedExtensions := []string{".jpg", ".jpeg", ".png", ".gif"}

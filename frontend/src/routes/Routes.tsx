@@ -50,6 +50,10 @@ const Routes = () => {
         {
           path: "/account/address",
           element: <Address />,
+        },
+        {
+          path: "/account/address/:id",
+          element: <div>edit</div>,
         }
       ],
     },

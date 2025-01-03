@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useState } from "react";
 import Wrapper from "../components/layout/Wrapper"
 import Navbar from "../components/Navbar"
 import { IoIosArrowForward } from "react-icons/io";
@@ -6,49 +6,23 @@ import axios from "axios";
 import { useNavigate } from "react-router";
 import { getErrorMessage } from "../utils/errorHandler";
 
-// interface Province {
-//     id: number
-//     geography_id: number
-//     name_th: string
-//     name_en: string
-//     created_at: string
-//     updated_at: string
-//     deleted_at: string
-// }
-
 const Address = () => {
-    const [provinces, setProvinces] = useState<any[]>([]); // จังหวัด
-    const [selectProvince, setSelectProvince] = useState<string>("")
-    const [district, setDistrict] = useState<string>(""); // อำเภอ
-    const [subDistrict, setSubDistrict] = useState<string>(""); // ตำบล
-    const [houseNumber, setHouseNumber] = useState<string>(""); // บ้านเลขที่
-    const [village, setVillage] = useState<string>(""); // หมู่
-    const [postalCode, setPostalCode] = useState<string>(""); // รหัสไปรษณีย์
+    const [province, setProvince] = useState<string>("")
+    const [district, setDistrict] = useState<string>("")
+    const [subDistrict, setSubDistrict] = useState<string>("")
+    const [houseNumber, setHouseNumber] = useState<string>("")
+    const [village, setVillage] = useState<string>("")
+    const [postalCode, setPostalCode] = useState<string>("")
     const [loading, setLoading] = useState<boolean>(false)
     const [error, setError] = useState<string | null>(null)
     const navigate = useNavigate()
 
-    const fetchProvince = async () => {
+    const handleSubmit = async (event: FormEvent) => {
+        event.preventDefault()
+        const address = `จังหวัด ${province} อำเภอ ${district} ตำบล ${subDistrict} บ้านเลขที่ ${houseNumber} หมู่ ${village} รหัสไปรษณีย์ ${postalCode}`
         try {
             setLoading(true)
             setError(null)
-            const res = await axios.get("https://raw.githubusercontent.com/kongvut/thai-province-data/master/api_province.json")
-            setProvinces(res.data)
-        } catch (err) {
-            setError(getErrorMessage(err))
-        } finally {
-            setLoading(false)
-        }
-    }
-
-    useEffect(() => {
-        fetchProvince()
-    }, [])
-
-    const handleSubmit = async (event: FormEvent) => {
-        event.preventDefault()
-        const address = `จังหวัด ${selectProvince} อำเภอ ${district} ตำบล ${subDistrict} บ้านเลขที่ ${houseNumber} หมู่ ${village} รหัสไปรษณีย์ ${postalCode}`
-        try {
             await axios.post("http://localhost:8080/users/address",
                 { address },
                 { withCredentials: true }
@@ -56,9 +30,10 @@ const Address = () => {
             alert("ok")
             navigate("/account")
         } catch (err) {
-            console.log(err);
+            setError(getErrorMessage(err))
+        } finally {
+            setLoading(false)
         }
-
     }
 
     return (
@@ -77,17 +52,9 @@ const Address = () => {
                         <div className="bg-white p-4 rounded">
                             <form onSubmit={handleSubmit}>
                                 <h2 className="text-xl">Add Address</h2>
-                                <div className="flex flex-col">
+                                <div className="flex flex-col mt-4">
                                     <label>Province</label>
-                                    <select onChange={event => setSelectProvince(event.target.value)} className="border-2 border-gray-300 p-2 rounded">
-                                        {loading ? (
-                                            <option value="2222" selected>loading...</option>
-                                        ) : error ? (
-                                            <option value="2222" selected>{error}</option>
-                                        ) : (
-                                            <option value="2222">1</option>
-                                        )}
-                                    </select>
+                                    <input type="text" onChange={event => setProvince(event.target.value)} className="border-2 border-gray-300 p-2 rounded" />
                                 </div>
                                 <div className="flex flex-col">
                                     <label>District</label>
@@ -109,7 +76,8 @@ const Address = () => {
                                     <label >Postal Code:</label>
                                     <input type="text" onChange={event => setPostalCode(event.target.value)} className="border-2 border-gray-300 p-2 rounded" />
                                 </div>
-                                <button type="submit" className="mt-4 bg-green-400 w-20 h-10 rounded-lg">Submit</button>
+                                <button type="submit" disabled={loading} className="mt-4 bg-green-300 w-20 h-10 rounded-lg disabled:bg-gray-600">Submit</button>
+                                {error && <span>{error}</span>}
                             </form>
                         </div>
                     </div>

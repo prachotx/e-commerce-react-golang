@@ -4,6 +4,7 @@ import { MdDeleteOutline } from "react-icons/md";
 import Modal from "./Modal";
 import axios from "axios";
 import { getErrorMessage } from "../utils/errorHandler";
+import { Link } from "react-router";
 
 type Props = {
     id: number
@@ -33,7 +34,9 @@ const AddressList = ({ id, address, fetchAddress }: Props) => {
             <div className="border-2 border-gray-300 rounded h-[100px] flex items-center justify-between mb-4 p-4">
                 <div>{address}</div>
                 <div className="flex flex-col gap-2">
-                    <button className="text-2xl bg-yellow-400 p-2 rounded-lg"><AiOutlineEdit /></button>
+                    <Link to={`/account/address/${id}`}>
+                        <button className="text-2xl bg-yellow-400 p-2 rounded-lg"><AiOutlineEdit /></button>
+                    </Link>
                     <button onClick={deleteModalToggle} className="text-2xl bg-red-400 p-2 rounded-lg"><MdDeleteOutline /></button>
                 </div>
             </div>
