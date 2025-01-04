@@ -93,7 +93,15 @@ const Account = () => {
                                     </div>
                                     <div>
                                         {address?.map((item) => (
-                                           <AddressList key={item.id} id={item.id} address={item.address} fetchAddress={fetchAddress} />
+                                           <AddressList 
+                                           key={item.id} 
+                                           id={item.id} 
+                                           address={item.address} 
+                                           province={item.province}
+                                           district={item.district}
+                                           subDistrict={item.sub_district}
+                                           postCode={item.postcode}  
+                                           fetchAddress={fetchAddress} />
                                         ))}
                                     </div>
                                 </>

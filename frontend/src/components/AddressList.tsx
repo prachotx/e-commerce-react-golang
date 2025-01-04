@@ -9,10 +9,14 @@ import { Link } from "react-router";
 type Props = {
     id: number
     address: string
+    province: string
+    district: string
+    subDistrict: string
+    postCode: string
     fetchAddress: () => void
 }
 
-const AddressList = ({ id, address, fetchAddress }: Props) => {
+const AddressList = ({ id, address, province, district, subDistrict, postCode, fetchAddress }: Props) => {
     const [deleteToggle, setDeleteToggle] = useState<boolean>(false)
 
     const deleteModalToggle = () => {
@@ -32,7 +36,13 @@ const AddressList = ({ id, address, fetchAddress }: Props) => {
     return (
         <>
             <div className="border-2 border-gray-300 rounded h-[100px] flex items-center justify-between mb-4 p-4">
-                <div>{address}</div>
+                <div>
+                    <span>{address}</span>
+                    <span>{province}</span>
+                    <span>{district}</span>
+                    <span>{subDistrict}</span>
+                    <span>{postCode}</span>
+                </div>
                 <div className="flex flex-col gap-2">
                     <Link to={`/account/address/${id}`}>
                         <button className="text-2xl bg-yellow-400 p-2 rounded-lg"><AiOutlineEdit /></button>

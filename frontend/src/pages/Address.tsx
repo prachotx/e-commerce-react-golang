@@ -7,29 +7,28 @@ import { useNavigate } from "react-router";
 import { getErrorMessage } from "../utils/errorHandler";
 
 const Address = () => {
+    const [address, setAddress] = useState<string>("")
     const [province, setProvince] = useState<string>("")
     const [district, setDistrict] = useState<string>("")
     const [subDistrict, setSubDistrict] = useState<string>("")
-    const [houseNumber, setHouseNumber] = useState<string>("")
-    const [village, setVillage] = useState<string>("")
-    const [postalCode, setPostalCode] = useState<string>("")
+    const [postCode, setPostCode] = useState<string>("")
     const [loading, setLoading] = useState<boolean>(false)
     const [error, setError] = useState<string | null>(null)
     const navigate = useNavigate()
 
     const handleSubmit = async (event: FormEvent) => {
         event.preventDefault()
-        const address = `จังหวัด ${province} อำเภอ ${district} ตำบล ${subDistrict} บ้านเลขที่ ${houseNumber} หมู่ ${village} รหัสไปรษณีย์ ${postalCode}`
         try {
             setLoading(true)
             setError(null)
             await axios.post("http://localhost:8080/users/address",
-                { address },
+                { address, province, district, sub_district: subDistrict, postcode: postCode },
                 { withCredentials: true }
             )
-            alert("ok")
             navigate("/account")
         } catch (err) {
+            console.log(err);
+            
             setError(getErrorMessage(err))
         } finally {
             setLoading(false)
@@ -53,6 +52,10 @@ const Address = () => {
                             <form onSubmit={handleSubmit}>
                                 <h2 className="text-xl">Add Address</h2>
                                 <div className="flex flex-col mt-4">
+                                    <label>Address</label>
+                                    <input type="text" onChange={event => setAddress(event.target.value)} className="border-2 border-gray-300 p-2 rounded" />
+                                </div>
+                                <div className="flex flex-col">
                                     <label>Province</label>
                                     <input type="text" onChange={event => setProvince(event.target.value)} className="border-2 border-gray-300 p-2 rounded" />
                                 </div>
@@ -65,16 +68,8 @@ const Address = () => {
                                     <input type="text" onChange={event => setSubDistrict(event.target.value)} className="border-2 border-gray-300 p-2 rounded" />
                                 </div>
                                 <div className="flex flex-col">
-                                    <label>House Number:</label>
-                                    <input type="text" onChange={event => setHouseNumber(event.target.value)} className="border-2 border-gray-300 p-2 rounded" />
-                                </div>
-                                <div className="flex flex-col">
-                                    <label>Village:</label>
-                                    <input type="text" onChange={event => setVillage(event.target.value)} className="border-2 border-gray-300 p-2 rounded" />
-                                </div>
-                                <div className="flex flex-col">
                                     <label >Postal Code:</label>
-                                    <input type="text" onChange={event => setPostalCode(event.target.value)} className="border-2 border-gray-300 p-2 rounded" />
+                                    <input type="text" onChange={event => setPostCode(event.target.value)} className="border-2 border-gray-300 p-2 rounded" />
                                 </div>
                                 <button type="submit" disabled={loading} className="mt-4 bg-green-300 w-20 h-10 rounded-lg disabled:bg-gray-600">Submit</button>
                                 {error && <span>{error}</span>}

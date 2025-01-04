@@ -28,21 +28,25 @@ func CreateOrder(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"message": "no items in cart"})
 	}
 
-	var input model.Address
-	if err := c.BodyParser(&input); err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"message": "invalid request body"})
-	}
-
 	var totalAmount float64
 	for _, item := range cartItems {
 		totalAmount += float64(item.Quantity) * item.Product.Price
 	}
 
+	var input model.Address
+	if err := c.BodyParser(&input); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"message": "invalid request body"})
+	}
+
 	order := model.Order{
-		UserID:          userID,
-		TotalAmount:     totalAmount,
-		ShippingAddress: input.Address,
-		Status:          "pending",
+		UserID:      userID,
+		TotalAmount: totalAmount,
+		Address:     input.Address,
+		Province:    input.Province,
+		District:    input.District,
+		SubDistrict: input.SubDistrict,
+		Postcode:    input.Postcode,
+		Status:      "pending",
 	}
 	if err := database.DB.Create(&order).Error; err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"message": "failed to create order"})
