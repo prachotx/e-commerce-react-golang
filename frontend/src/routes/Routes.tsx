@@ -8,7 +8,8 @@ import Register from "../pages/Register";
 import Products from "../pages/Products";
 import ProductByID from "../pages/ProductByID";
 import Account from "../pages/Account";
-import Address from "../pages/Address";
+import CreateAddress from "../pages/CreateAddress";
+import EditAddress from "../pages/EditAddress";
 
 const Routes = () => {
   const routesForPublic = [
@@ -49,11 +50,11 @@ const Routes = () => {
         },
         {
           path: "/account/address",
-          element: <Address />,
+          element: <CreateAddress />,
         },
         {
           path: "/account/address/:id",
-          element: <div>edit</div>,
+          element: <EditAddress />,
         }
       ],
     },
