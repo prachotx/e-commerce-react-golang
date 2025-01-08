@@ -11,17 +11,17 @@ var DB *gorm.DB
 
 func Connect() {
 	const (
-		host     = "localhost"
+		host     = "db"
 		port     = 5432
-		user     = "postgres"
-		password = ""
-		dbname   = "postgres"
+		user     = "root"
+		password = "1234"
+		dbname   = "mydatabase"
 	)
 	dsn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
 		host, port, user, password, dbname)
 	var err error
 	DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
-		panic("Failed to connect to database!")
+		panic("failed to connect to database")
 	}
 }
