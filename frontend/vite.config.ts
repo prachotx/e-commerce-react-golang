@@ -5,7 +5,11 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   server: {
+    watch: {
+      usePolling: true, // สำคัญสำหรับ Docker
+    },
     host: true,
-    port: 5173,
+    strictPort: true,
+    port: 5173, // ใช้ port นี้
   },
 })
