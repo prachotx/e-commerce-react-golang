@@ -10,6 +10,7 @@ import ProductByID from "../pages/ProductByID";
 import Account from "../pages/Account";
 import CreateAddress from "../pages/CreateAddress";
 import EditAddress from "../pages/EditAddress";
+import Cart from "../pages/Cart";
 
 const Routes = () => {
   const routesForPublic = [
@@ -42,7 +43,7 @@ const Routes = () => {
       children: [
         {
           path: "/cart",
-          element: <div>Cart Page</div>,
+          element: <Cart />,
         },
         {
           path: "/account",

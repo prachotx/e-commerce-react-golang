@@ -6,10 +6,10 @@ export default defineConfig({
   plugins: [react()],
   server: {
     watch: {
-      usePolling: true, // สำคัญสำหรับ Docker
+      usePolling: true,
     },
     host: true,
     strictPort: true,
-    port: 5173, // ใช้ port นี้
+    port: 5173,
   },
 })

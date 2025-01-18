@@ -14,6 +14,7 @@ interface Product {
     description: string;
     price: number;
     stock: number;
+    discount: number;
     image_url: string;
     created_at: string;
     updated_at: string;
@@ -106,7 +107,7 @@ function Products() {
                                 <>
                                     <div className="grid grid-cols-4 gap-4 mt-4">
                                         {products?.products.map((item) => (
-                                            <ProductList key={item.id} id={item.id} name={item.name} price={item.price} />
+                                            <ProductList key={item.id} id={item.id} name={item.name} price={item.price} discount={item.discount} />
                                         ))}
                                     </div>
                                     <Pagination page={products?.page || 1} total_page={products?.total_page || 1} setPage={setPage} />

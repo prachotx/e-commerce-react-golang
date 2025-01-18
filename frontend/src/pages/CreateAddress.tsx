@@ -53,23 +53,23 @@ const CreateAddress = () => {
                                 <h2 className="text-xl">Add Address</h2>
                                 <div className="flex flex-col mt-4">
                                     <label>Address</label>
-                                    <input type="text" onChange={event => setAddress(event.target.value)} className="border-2 border-gray-300 p-2 rounded" />
+                                    <input type="text" onChange={event => setAddress(event.target.value)} className="border-2 border-gray-300 p-2 rounded" required/>
                                 </div>
                                 <div className="flex flex-col">
                                     <label>Province</label>
-                                    <input type="text" onChange={event => setProvince(event.target.value)} className="border-2 border-gray-300 p-2 rounded" />
+                                    <input type="text" onChange={event => setProvince(event.target.value)} className="border-2 border-gray-300 p-2 rounded" required/>
                                 </div>
                                 <div className="flex flex-col">
                                     <label>District</label>
-                                    <input type="text" onChange={event => setDistrict(event.target.value)} className="border-2 border-gray-300 p-2 rounded" />
+                                    <input type="text" onChange={event => setDistrict(event.target.value)} className="border-2 border-gray-300 p-2 rounded" required/>
                                 </div>
                                 <div className="flex flex-col">
                                     <label>Subdistrict</label>
-                                    <input type="text" onChange={event => setSubDistrict(event.target.value)} className="border-2 border-gray-300 p-2 rounded" />
+                                    <input type="text" onChange={event => setSubDistrict(event.target.value)} className="border-2 border-gray-300 p-2 rounded" required/>
                                 </div>
                                 <div className="flex flex-col">
                                     <label >Postal Code:</label>
-                                    <input type="text" onChange={event => setPostCode(event.target.value)} className="border-2 border-gray-300 p-2 rounded" />
+                                    <input type="text" onChange={event => setPostCode(event.target.value)} className="border-2 border-gray-300 p-2 rounded" required/>
                                 </div>
                                 <button type="submit" disabled={loading} className="mt-4 bg-green-300 w-20 h-10 rounded-lg disabled:bg-gray-600">Submit</button>
                                 {error && <span>{error}</span>}

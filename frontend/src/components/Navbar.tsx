@@ -26,7 +26,6 @@ const Navbar = () => {
             </li>
             <li>Order</li>
           </ul>
-
           <div className="flex items-center">
             <Link to="/cart">
               <PiShoppingCart className="text-3xl mr-8" />

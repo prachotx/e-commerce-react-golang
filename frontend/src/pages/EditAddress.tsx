@@ -52,28 +52,28 @@ const EditAddress = () => {
                         </div>
                         <div className="bg-white p-4 rounded">
                             <form>
-                                <h2 className="text-xl">Add Address</h2>
+                                <h2 className="text-xl">Edit Address</h2>
                                 <div className="flex flex-col mt-4">
                                     <label>Address</label>
-                                    <input value={address} type="text" onChange={event => setAddress(event.target.value)} className="border-2 border-gray-300 p-2 rounded" />
+                                    <input value={address} type="text" onChange={event => setAddress(event.target.value)} className="border-2 border-gray-300 p-2 rounded" required/>
                                 </div>
                                 <div className="flex flex-col">
                                     <label>Province</label>
-                                    <input value={province} type="text" onChange={event => setProvince(event.target.value)} className="border-2 border-gray-300 p-2 rounded" />
+                                    <input value={province} type="text" onChange={event => setProvince(event.target.value)} className="border-2 border-gray-300 p-2 rounded" required/>
                                 </div>
                                 <div className="flex flex-col">
                                     <label>District</label>
-                                    <input value={district} type="text" onChange={event => setDistrict(event.target.value)} className="border-2 border-gray-300 p-2 rounded" />
+                                    <input value={district} type="text" onChange={event => setDistrict(event.target.value)} className="border-2 border-gray-300 p-2 rounded" required/>
                                 </div>
                                 <div className="flex flex-col">
                                     <label>Subdistrict</label>
-                                    <input value={subDistrict} type="text" onChange={event => setSubDistrict(event.target.value)} className="border-2 border-gray-300 p-2 rounded" />
+                                    <input value={subDistrict} type="text" onChange={event => setSubDistrict(event.target.value)} className="border-2 border-gray-300 p-2 rounded" required/>
                                 </div>
                                 <div className="flex flex-col">
                                     <label>Postal Code:</label>
-                                    <input value={postCode} type="text" onChange={event => setPostCode(event.target.value)} className="border-2 border-gray-300 p-2 rounded" />
+                                    <input value={postCode} type="text" onChange={event => setPostCode(event.target.value)} className="border-2 border-gray-300 p-2 rounded" required/>
                                 </div>
-                                <button type="submit" disabled={loading} className="mt-4 bg-green-300 w-20 h-10 rounded-lg disabled:bg-gray-600">Submit</button>
+                                <button type="submit" disabled={loading} className="mt-4 bg-green-300 w-20 h-10 rounded-lg disabled:bg-gray-600">Save</button>
                                 {error && <span>{error}</span>}
                             </form>
                         </div>

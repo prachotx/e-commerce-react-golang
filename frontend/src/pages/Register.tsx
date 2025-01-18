@@ -8,6 +8,7 @@ const Register = () => {
   const [email, setEmail] = useState<string>("")
   const [password, setPassword] = useState<string>("")
   const [confirmPassword, setConfirmPassword] = useState<string>("")
+  const [loading, setLoading] = useState<boolean>(false)
   const [error, setError] = useState<string | null>(null)
   const navigate = useNavigate()
 
@@ -17,6 +18,8 @@ const Register = () => {
       setError("passwords do not match")
     }
     try {
+      setLoading(true)
+      setError(null)
       await axios.post(
         "http://localhost:8080/users/register",
         { username, email, password }
@@ -24,6 +27,8 @@ const Register = () => {
       navigate("/login")
     } catch (err) {
       setError(getErrorMessage(err))
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -48,7 +53,7 @@ const Register = () => {
           <input type="password" placeholder="Confirm Password" onChange={event => setConfirmPassword(event.target.value)} className="bg-gray-100 py-3 px-4 w-full rounded-full outline-none placeholder:text-gray-400" />
         </div>
         <div className="mb-4">
-          <button type="submit" className="bg-green-300 w-full py-3 rounded-full">Sign in</button>
+          <button type="submit" className="bg-green-300 uppercase w-full py-3 rounded-full disabled:bg-gray-600" disabled={loading}>Sign up</button>
         </div>
         <div className="absolute text-center">
           {error && <span className="text-red-500">{error}</span>}
