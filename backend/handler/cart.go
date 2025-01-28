@@ -98,8 +98,9 @@ func CreateCartItem(c *fiber.Ctx) error {
 			if err := database.DB.Create(&cart).Error; err != nil {
 				return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"message": "failed to create cart"})
 			}
+		} else {
+			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"message": "failed to fetch cart"})
 		}
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"message": "failed to fetch cart"})
 	}
 
 	var product model.Product
@@ -130,8 +131,9 @@ func CreateCartItem(c *fiber.Ctx) error {
 			if err := database.DB.Create(&cartItem).Error; err != nil {
 				return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"message": "failed to add product to cart"})
 			}
+		} else {
+			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"message": "failed to fetch cart item"})
 		}
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"message": "failed to fetch cart item"})
 	} else {
 		cartItem.Quantity += input.Quantity
 		if err := database.DB.Save(&cartItem).Error; err != nil {
@@ -173,15 +175,38 @@ func UpdateCartItem(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"message": "failed to fetch cart item"})
 	}
 
-	if input.Quantity > 0 {
-		cartItem.Quantity = input.Quantity
-		if err := database.DB.Save(&cartItem).Error; err != nil {
-			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"message": "failed to update cart item"})
+	var product model.Product
+	if err := database.DB.First(&product, cartItem.ProductID).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"message": "product not found"})
 		}
-	} else {
-		if err := database.DB.Delete(&cartItem).Error; err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"message": "failed to fetch product"})
+	}
+
+	if input.Quantity == 0 {
+		if err := database.DB.Unscoped().Delete(&cartItem).Error; err != nil {
 			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"message": "failed to delete cart item"})
 		}
+		return c.Status(fiber.StatusOK).JSON(fiber.Map{"message": "deleted cart item"})
+	}
+
+	stockChange := input.Quantity - cartItem.Quantity
+
+	if stockChange > 0 && product.Stock < stockChange {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"message": "not enough stock available"})
+	}
+
+	product.Stock -= stockChange
+
+	if stockChange != 0 {
+		if err := database.DB.Save(&product).Error; err != nil {
+			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"message": "failed to update product stock"})
+		}
+	}
+
+	cartItem.Quantity = input.Quantity
+	if err := database.DB.Save(&cartItem).Error; err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"message": "failed to update cart item"})
 	}
 
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
@@ -204,7 +229,26 @@ func DeleteCartItem(c *fiber.Ctx) error {
 	}
 
 	var cartItem model.CartItem
-	if err := database.DB.Where("cart_id = ?", cart.ID).Delete(&cartItem, id).Error; err != nil {
+	if err := database.DB.Where("cart_id = ?", cart.ID).First(&cartItem, id).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"message": "cart item not found"})
+		}
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"message": "failed to fetch cart item"})
+	}
+
+	var product model.Product
+	if err := database.DB.First(&product, cartItem.ProductID).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"message": "product not found"})
+		}
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"message": "failed to fetch product"})
+	}
+	product.Stock += cartItem.Quantity
+	if err := database.DB.Save(&product).Error; err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"message": "failed to update product"})
+	}
+
+	if err := database.DB.Where("cart_id = ?", cart.ID).Unscoped().Delete(&cartItem, id).Error; err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"message": "failed to delete cart item"})
 	}
 

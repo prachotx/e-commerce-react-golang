@@ -91,7 +91,7 @@ func DeleteUserAddress(c *fiber.Ctx) error {
 	id := c.Params("id")
 
 	var address model.Address
-	if err := database.DB.Where("user_id = ?", userID).Delete(&address, id).Error; err != nil {
+	if err := database.DB.Where("user_id = ?", userID).Unscoped().Delete(&address, id).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"message": "address not found"})
 		}

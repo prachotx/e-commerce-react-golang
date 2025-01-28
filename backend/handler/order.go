@@ -64,7 +64,7 @@ func CreateOrder(c *fiber.Ctx) error {
 		}
 	}
 
-	if err := database.DB.Where("cart_id = ?", cart.ID).Delete(&model.CartItem{}).Error; err != nil {
+	if err := database.DB.Where("cart_id = ?", cart.ID).Unscoped().Delete(&model.CartItem{}).Error; err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"message": "failed to delete cart item"})
 	}
 

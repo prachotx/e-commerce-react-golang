@@ -171,7 +171,7 @@ func DeleteProduct(c *fiber.Ctx) error {
 	id := c.Params("id")
 
 	var product model.Product
-	if err := database.DB.Delete(&product, id).Error; err != nil {
+	if err := database.DB.Unscoped().Delete(&product, id).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"message": "product not found"})
 		}
