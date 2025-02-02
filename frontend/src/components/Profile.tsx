@@ -1,5 +1,5 @@
 import { FiUser } from "react-icons/fi";
-import { useAuth } from "../provider/authProvider";
+import { useAuth } from "../providers/authProvider";
 import { useRef } from "react";
 import { useNavigate } from "react-router";
 import { Link } from "react-router";
@@ -21,11 +21,16 @@ const Profile = () => {
                 <span>{user?.username}</span>
                 <FiUser className="text-xl ml-2" />
             </div>
-            <div ref={divRef} className="absolute bottom-[-48px] left-0 hidden bg-white border-2 border-gray-300 w-full text-center rounded-b cursor-pointer">
+            <div ref={divRef} className="absolute bottom-[-70px] left-0 hidden bg-white border-2 border-gray-300 w-full text-center rounded-b cursor-pointer">
                 <ul>
                     <li>
                         <Link to="/account">
                             Account
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/order">
+                            Order
                         </Link>
                     </li>
                     <li onClick={() => {

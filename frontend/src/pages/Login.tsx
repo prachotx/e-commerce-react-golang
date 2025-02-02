@@ -2,7 +2,7 @@ import axios, { AxiosError } from "axios"
 import { FormEvent, useRef, useState } from "react"
 import LayoutLogin from "../components/layout/LayoutLogin"
 import { Link, useNavigate } from "react-router"
-import { useAuth } from "../provider/authProvider"
+import { useAuth } from "../providers/authProvider"
 
 function Login() {
     const { setToken } = useAuth()

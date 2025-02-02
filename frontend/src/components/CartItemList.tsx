@@ -78,7 +78,7 @@ const CartItemList = ({ id, name, price, quantity, total, toggleDelete, toggleDe
                         <form onSubmit={editCartItem}>
                             <div className="flex flex-col mb-4">
                                 <label>Quantity</label>
-                                <input value={quantityEdit} type="number" onChange={(event) => setQuantityEdit(event.target.value)} className="border-2 border-gray-300 p-2 rounded" required />
+                                <input value={quantityEdit} type="number" min={1} onChange={(event) => setQuantityEdit(event.target.value)} className="border-2 border-gray-300 p-2 rounded" required />
                             </div>
                             <div className="flex justify-end">
                                 <button type="submit" className="bg-green-500 text-white px-4 py-2 rounded mr-2 disabled:bg-gray-600">Add</button>

@@ -1,5 +1,5 @@
 import { Navigate, Outlet } from "react-router"
-import { useAuth } from "../provider/authProvider"
+import { useAuth } from "../providers/authProvider"
 
 const RoleBasedRoute = () => {
   const { token, user } = useAuth()

@@ -33,20 +33,25 @@ func CreateOrder(c *fiber.Ctx) error {
 		totalAmount += float64(item.Quantity) * item.Product.Price
 	}
 
-	var input model.Address
-	if err := c.BodyParser(&input); err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"message": "invalid request body"})
+	id := c.Params("id")
+
+	var address model.Address
+	if err := database.DB.Where("user_id = ? AND id = ?", userID, id).First(&address).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"message": "address not found"})
+		}
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"message": "failed to fetch address"})
 	}
 
 	order := model.Order{
 		UserID:      userID,
 		TotalAmount: totalAmount,
-		Address:     input.Address,
-		Province:    input.Province,
-		District:    input.District,
-		SubDistrict: input.SubDistrict,
-		Postcode:    input.Postcode,
 		Status:      "pending",
+		Address:     address.Address,
+		Province:    address.Province,
+		District:    address.District,
+		SubDistrict: address.SubDistrict,
+		Postcode:    address.Postcode,
 	}
 	if err := database.DB.Create(&order).Error; err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"message": "failed to create order"})

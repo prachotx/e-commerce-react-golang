@@ -92,6 +92,9 @@ const Cart = () => {
                                     ))}
                                 </div>
                             )}
+                            <div className="flex justify-end">
+                                <a href="/create_order" className="btn bg-green-300 p-2 rounded">Create Order</a>
+                            </div>
                         </div>
                     </div>
                 </Wrapper>

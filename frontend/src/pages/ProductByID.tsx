@@ -98,7 +98,15 @@ const ProductByID = () => {
                                                     <form onSubmit={handleSubmit}>
                                                         <div className="flex flex-col mb-4">
                                                             <label>Quantity</label>
-                                                            <input value={quantity} type="number" onChange={(event) => setQuantity(event.target.value)} className="border-2 border-gray-300 p-2 rounded" required />
+                                                            <input 
+                                                            value={quantity} 
+                                                            type="number"
+                                                            max={product?.stock} 
+                                                            min={1} 
+                                                            onChange={(event) => setQuantity(event.target.value)} 
+                                                            className="border-2 border-gray-300 p-2 rounded" 
+                                                            required 
+                                                            />
                                                         </div>
                                                         <div className="flex justify-end">
                                                             <button type="submit" className="bg-green-500 text-white px-4 py-2 rounded mr-2">Add</button>

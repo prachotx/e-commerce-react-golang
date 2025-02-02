@@ -1,7 +1,7 @@
 import Wrapper from "./layout/Wrapper"
 import { Link } from "react-router";
 import { PiShoppingCart } from "react-icons/pi";
-import { useAuth } from "../provider/authProvider";
+import { useAuth } from "../providers/authProvider";
 import Profile from "./Profile";
 import Logo from "./Logo";
 
@@ -24,7 +24,6 @@ const Navbar = () => {
                 Shop
               </Link>
             </li>
-            <li>Order</li>
           </ul>
           <div className="flex items-center">
             <Link to="/cart">

@@ -11,6 +11,9 @@ import Account from "../pages/Account";
 import CreateAddress from "../pages/CreateAddress";
 import EditAddress from "../pages/EditAddress";
 import Cart from "../pages/Cart";
+import CreateOrder from "../pages/CreateOrder";
+import Orders from "../pages/Orders";
+import OrderByID from "../pages/OrderByID";
 
 const Routes = () => {
   const routesForPublic = [
@@ -44,6 +47,18 @@ const Routes = () => {
         {
           path: "/cart",
           element: <Cart />,
+        },
+        {
+          path: "/order",
+          element: <Orders />
+        },
+        {
+          path: "/order/:id",
+          element: <OrderByID />
+        },
+        {
+          path: "/create_order",
+          element: <CreateOrder />,
         },
         {
           path: "/account",

@@ -46,7 +46,7 @@ func main() {
 	app.Put("/products/:id", middleware.Authenticate, middleware.AuthorizeAdmin, handler.UpdateProduct)
 	app.Delete("/products/:id", middleware.Authenticate, middleware.AuthorizeAdmin, handler.DeleteProduct)
 
-	app.Post("/orders", middleware.Authenticate, handler.CreateOrder)
+	app.Post("/orders/:id", middleware.Authenticate, handler.CreateOrder)
 	app.Get("/orders", middleware.Authenticate, handler.GetOrders)
 	app.Get("/orders/:id", middleware.Authenticate, handler.GetOrderDetail)
 
