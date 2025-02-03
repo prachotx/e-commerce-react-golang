@@ -29,7 +29,7 @@ const Profile = () => {
                         </Link>
                     </li>
                     <li>
-                        <Link to="/order">
+                        <Link to="/orders">
                             Order
                         </Link>
                     </li>

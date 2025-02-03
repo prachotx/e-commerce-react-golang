@@ -11,7 +11,7 @@ type OrderItem struct {
 	OrderID   uint           `gorm:"not null" json:"order_id"`
 	Order     Order          `gorm:"foreignKey:OrderID" json:"-"`
 	ProductID uint           `gorm:"not null" json:"product_id"`
-	Product   Product        `gorm:"foreignKey:ProductID" json:"-"`
+	Product   Product        `gorm:"foreignKey:ProductID" json:"product"`
 	Quantity  int            `gorm:"not null" json:"quantity"`
 	Price     float64        `gorm:"not null" json:"price"`
 	CreatedAt time.Time      `gorm:"default:CURRENT_TIMESTAMP" json:"created_at"`

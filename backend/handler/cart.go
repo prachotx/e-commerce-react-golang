@@ -168,7 +168,7 @@ func UpdateCartItem(c *fiber.Ctx) error {
 	}
 
 	var cartItem model.CartItem
-	if err := database.DB.Where("cart_id = ? AND id = ?", cart.ID, id).First(&cartItem).Error; err != nil {
+	if err := database.DB.Where("id = ? AND cart_id = ?", id, cart.ID).First(&cartItem).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"message": "cart item not found"})
 		}
@@ -229,7 +229,7 @@ func DeleteCartItem(c *fiber.Ctx) error {
 	}
 
 	var cartItem model.CartItem
-	if err := database.DB.Where("cart_id = ?", cart.ID).First(&cartItem, id).Error; err != nil {
+	if err := database.DB.Where("id = ? AND cart_id = ?", id, cart.ID).First(&cartItem).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"message": "cart item not found"})
 		}

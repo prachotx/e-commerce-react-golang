@@ -77,6 +77,7 @@ const Orders = () => {
                                         {orders?.orders.map((item) => (
                                             <OrderList
                                                 key={item.id}
+                                                id={item.id}
                                                 total_amount={item.total_amount}
                                                 status={item.status}
                                                 address={item.address}

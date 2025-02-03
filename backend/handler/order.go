@@ -150,7 +150,7 @@ func GetOrderDetail(c *fiber.Ctx) error {
 	}
 
 	var orderItems []model.OrderItem
-	if err := database.DB.Where("order_id = ?", order.ID).Limit(limit).Offset(offset).First(&orderItems).Error; err != nil {
+	if err := database.DB.Preload("Product").Where("order_id = ?", order.ID).Limit(limit).Offset(offset).Find(&orderItems).Error; err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"message": "failed to fetch order item"})
 	}
 	if len(orderItems) == 0 {

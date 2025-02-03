@@ -1,4 +1,7 @@
+import { Link } from "react-router"
+
 type Props = {
+    id: number
     total_amount: number
     status: string
     address: string
@@ -9,6 +12,7 @@ type Props = {
 }
 
 const OrderList = ({
+    id,
     total_amount,
     status,
     address,
@@ -18,7 +22,7 @@ const OrderList = ({
     postCode
 }: Props) => {
     return (
-        <div className="flex justify-between border-2 border-gray-300 p-4 rounded">
+        <Link to={`/orders/${id}`} className="flex justify-between border-2 border-gray-300 p-4 rounded">
             <div>{total_amount}</div>
             <div>
                 <span>{address}</span>
@@ -28,7 +32,7 @@ const OrderList = ({
                 <span>{postCode}</span>
             </div>
             <div>{status}</div>
-        </div>
+        </Link>
     )
 }
 

@@ -49,11 +49,11 @@ const Routes = () => {
           element: <Cart />,
         },
         {
-          path: "/order",
+          path: "/orders",
           element: <Orders />
         },
         {
-          path: "/order/:id",
+          path: "/orders/:id",
           element: <OrderByID />
         },
         {
