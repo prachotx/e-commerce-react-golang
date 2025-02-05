@@ -39,6 +39,8 @@ func main() {
 	app.Put("/users/address/:id", middleware.Authenticate, handler.UpdateUserAddress)
 	app.Delete("/users/address/:id", middleware.Authenticate, handler.DeleteUserAddress)
 
+	app.Get("/landing", handler.GetPromotedProducts)
+
 	app.Get("/products", handler.GetProducts)
 	app.Get("/products/:id", handler.GetProduct)
 	app.Post("/products", middleware.Authenticate, middleware.AuthorizeAdmin, handler.CreateProduct)

@@ -1,5 +1,5 @@
 import Wrapper from "./layout/Wrapper"
-import { Link } from "react-router";
+import { Link, NavLink } from "react-router";
 import { PiShoppingCart } from "react-icons/pi";
 import { useAuth } from "../providers/authProvider";
 import Profile from "./Profile";
@@ -9,38 +9,51 @@ const Navbar = () => {
   const { token } = useAuth()
 
   return (
-    <nav className="bg-white">
+    <nav className="bg-violet-500 text-white">
       <Wrapper>
-        <div className="flex items-center justify-between h-20">
+        <div className="flex items-center justify-between h-24">
           <Logo />
           <ul className="flex gap-4">
             <li>
-              <Link to="/">
+              <NavLink
+                to="/"
+                className={({ isActive }) =>
+                  isActive ? "bg-violet-600 py-3 px-4 rounded-[20px] text-white" : "py-3 px-4 rounded-[20px]"
+                }
+              >
                 Home
+              </NavLink>
+            </li>
+
+            <li>
+              <NavLink
+                to="/products"
+                className={({ isActive }) =>
+                  isActive ? "bg-violet-600 py-3 px-4 rounded-[20px] text-white" : "py-3 px-4 rounded-[20px]"
+                }
+              >
+                Shop
+              </NavLink>
+            </li>
+            <li>
+              <Link to="/cart">
+                <PiShoppingCart className="text-3xl" />
               </Link>
             </li>
             <li>
-              <Link to="/products">
-                Shop
-              </Link>
+              {token ? (
+                <Profile />
+              ) : (
+                <Link to="/login" className="bg-[#ff9671]  py-3 px-4 rounded-[20px] shadow uppercase">
+                  Sign in
+                </Link>
+              )}
             </li>
           </ul>
-          <div className="flex items-center">
-            <Link to="/cart">
-              <PiShoppingCart className="text-3xl mr-8" />
-            </Link>
-            {token ? (
-              <Profile />
-            ) : (
-              <Link to="/login" className="bg-gray-300 w-20 h-10 flex items-center justify-center rounded">
-                Login
-              </Link>
-            )}
-          </div>
         </div>
       </Wrapper>
     </nav>
   )
 }
 
-export default Navbar
+export default Navbar 
