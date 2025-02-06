@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import Wrapper from "../components/layout/Wrapper"
 import Navbar from "../components/Navbar"
 import axios from "axios"
-import { getErrorMessage } from "../utils/errorHandler"
+import { getErrorMessage } from "../utils/getErrorMessage"
 import { IoIosArrowForward } from "react-icons/io";
 import { IoMdAdd } from "react-icons/io";
 import { Link } from "react-router"

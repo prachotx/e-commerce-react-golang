@@ -8,7 +8,7 @@ import (
 
 func GetPromotedProducts(c *fiber.Ctx) error {
 	var products []model.Product
-	if err := database.DB.Order("discount DESC").Where("discount > 0").Find(&products).Error; err != nil {
+	if err := database.DB.Order("discount DESC").Limit(4).Where("discount > 0").Find(&products).Error; err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"message": "failed to fetch products"})
 	}
 

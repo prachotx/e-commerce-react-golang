@@ -1,7 +1,6 @@
 package middleware
 
 import (
-	"fmt"
 	"os"
 
 	"github.com/gofiber/fiber/v2"
@@ -39,7 +38,7 @@ func Authenticate(c *fiber.Ctx) error {
 // check role = admin
 func AuthorizeAdmin(c *fiber.Ctx) error {
 	role := c.Locals("role")
-	fmt.Print(role)
+
 	if role != "ADMIN" {
 		return c.Status(fiber.StatusForbidden).JSON(fiber.Map{"message": "forbidden"})
 	}

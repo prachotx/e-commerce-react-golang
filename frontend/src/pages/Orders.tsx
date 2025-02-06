@@ -3,7 +3,7 @@ import Wrapper from "../components/layout/Wrapper"
 import Navbar from "../components/Navbar"
 import { IoIosArrowForward } from "react-icons/io";
 import { useEffect, useState } from "react";
-import { getErrorMessage } from "../utils/errorHandler";
+import { getErrorMessage } from "../utils/getErrorMessage";
 import Pagination from "../components/Pagination";
 import OrderList from "../components/OrderList";
 

@@ -1,8 +1,7 @@
 const Logo = () => {
     return (
         <h1 className="flex items-center">
-            <img width={50} height={50} src="https://www.svgrepo.com/show/377473/pixelarticons.svg" alt="" />
-            <span className="text-2xl ml-2">LUGX</span>
+            <span className="text-3xl ml-2 font-semibold">LUGX</span>
         </h1>
     )
 }

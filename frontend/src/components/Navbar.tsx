@@ -4,6 +4,7 @@ import { PiShoppingCart } from "react-icons/pi";
 import { useAuth } from "../providers/authProvider";
 import Profile from "./Profile";
 import Logo from "./Logo";
+import Button from "./Button";
 
 const Navbar = () => {
   const { token } = useAuth()
@@ -44,9 +45,7 @@ const Navbar = () => {
               {token ? (
                 <Profile />
               ) : (
-                <Link to="/login" className="bg-[#ff9671]  py-3 px-4 rounded-[20px] shadow uppercase">
-                  Sign in
-                </Link>
+                <Button name="Sign In" path="/login" />
               )}
             </li>
           </ul>

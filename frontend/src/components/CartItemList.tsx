@@ -1,6 +1,6 @@
 import axios from "axios";
 import Modal from "./Modal"
-import { getErrorMessage } from "../utils/errorHandler";
+import { getErrorMessage } from "../utils/getErrorMessage";
 import { FormEvent, useState } from "react";
 
 type Props = {

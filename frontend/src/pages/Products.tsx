@@ -6,7 +6,7 @@ import { BiSearch } from "react-icons/bi";
 import { IoIosArrowForward } from "react-icons/io";
 import ProductList from "../components/ProductList";
 import Pagination from "../components/Pagination";
-import { getErrorMessage } from "../utils/errorHandler";
+import { getErrorMessage } from "../utils/getErrorMessage";
 
 interface Product {
     id: number;

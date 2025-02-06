@@ -4,7 +4,7 @@ import Wrapper from "../components/layout/Wrapper"
 import { IoIosArrowForward } from "react-icons/io";
 import { FormEvent, useEffect, useState } from "react";
 import axios from "axios";
-import { getErrorMessage } from "../utils/errorHandler";
+import { getErrorMessage } from "../utils/getErrorMessage";
 import Modal from "../components/Modal";
 
 interface Product {

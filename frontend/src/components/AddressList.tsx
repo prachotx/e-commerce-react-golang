@@ -3,7 +3,7 @@ import { AiOutlineEdit } from "react-icons/ai";
 import { MdDeleteOutline } from "react-icons/md";
 import Modal from "./Modal";
 import axios from "axios";
-import { getErrorMessage } from "../utils/errorHandler";
+import { getErrorMessage } from "../utils/getErrorMessage";
 import { Link } from "react-router";
 
 type Props = {

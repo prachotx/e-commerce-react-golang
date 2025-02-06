@@ -3,7 +3,7 @@ import Wrapper from "../components/layout/Wrapper"
 import Navbar from "../components/Navbar"
 import { IoIosArrowForward } from "react-icons/io";
 import axios from "axios";
-import { getErrorMessage } from "../utils/errorHandler";
+import { getErrorMessage } from "../utils/getErrorMessage";
 
 interface User {
     id: number

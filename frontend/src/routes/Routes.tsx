@@ -1,6 +1,6 @@
 import { RouterProvider, createBrowserRouter } from "react-router";
 
-import Home from "../pages/Home";
+import LandingPage from "../pages/LandingPage";
 import Login from "../pages/Login";
 import ProtectedRoute from "./ProtectedRoute";
 import RoleBasedRoute from "./RoleBasedRoute";
@@ -19,7 +19,7 @@ const Routes = () => {
   const routesForPublic = [
     {
       path: "/",
-      element: <Home />,
+      element: <LandingPage />,
     },
     {
       path: "/login",
