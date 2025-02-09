@@ -1,12 +1,14 @@
 import Navbar from "../components/Navbar"
-import Header from "../components/Header"
+import Welcome from "../components/Welcome"
 import Footer from "../components/Footer"
+import Subscribe from "../components/Subscribe"
 
 const LandingPage = () => {
   return (
     <main className="p-2">
       <Navbar />
-      <Header />
+      <Welcome />
+      <Subscribe />
       <Footer />
     </main>
   )

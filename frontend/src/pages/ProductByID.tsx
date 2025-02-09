@@ -1,11 +1,10 @@
 import { useNavigate, useParams } from "react-router"
-import Navbar from "../components/Navbar"
 import Wrapper from "../components/layout/Wrapper"
-import { IoIosArrowForward } from "react-icons/io";
 import { FormEvent, useEffect, useState } from "react";
 import axios from "axios";
 import { getErrorMessage } from "../utils/getErrorMessage";
-import Modal from "../components/Modal";
+import { RiShoppingBag4Line } from "react-icons/ri";
+import MainLayout from "../components/layout/MainLayout";
 
 interface Product {
     id: number;
@@ -55,10 +54,10 @@ const ProductByID = () => {
             return
         }
         try {
-            const res = await axios.post("http://localhost:8080/cart", 
-            { product_id: parseInt(id), quantity: parseInt(quantity) },
-            { withCredentials: true }
-        )
+            const res = await axios.post("http://localhost:8080/cart",
+                { product_id: parseInt(id), quantity: parseInt(quantity) },
+                { withCredentials: true }
+            )
             alert(res.data.message)
             navigate("/products")
         } catch (err) {
@@ -67,18 +66,26 @@ const ProductByID = () => {
     }
 
     return (
-        <main className="bg-gray-200">
-            <Navbar />
+        <MainLayout>
             <div>
                 <Wrapper>
-                    <div className="py-4">
-                        <div className="flex items-center text-lg mb-4">
-                            <span>home</span>
-                            <span><IoIosArrowForward /></span>
-                            <span>shop</span>
+                    <div className="flex justify-between">
+                        <div>
+                            <img className="rounded-[25px]" src="https://placehold.co/600x400" alt="" />
                         </div>
-                        <div className="bg-white p-4 rounded">
-                            {loading ? (
+                        <div className="max-w-[45%]">
+                            <h3 className="text-2xl font-bold">Call of Dud</h3>
+                            <h5 className="my-6">
+                                <span className="text-gray-400 line-through mr-2">$28</span>
+                                <span className="text-violet-500 text-2xl font-bold">$22</span>
+                            </h5>
+                            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptate quo molestiae maxime architecto dolores laboriosam quam consectetur, odio delectus nam.</p>
+                            <div className="flex mt-6 gap-4">
+                                <input type="text" className="bg-gray-100 rounded-[25px] w-[40px] shadow text-black" />
+                                <button className="my-btn flex items-center"><RiShoppingBag4Line className="text-xl mr-2" />Add to Cart</button>
+                            </div>
+                        </div>
+                        {/* {loading ? (
                                 <div>loading...</div>
                             ) : error ? (
                                 <div>{error}</div>
@@ -90,7 +97,6 @@ const ProductByID = () => {
                                     <div>stock : {product?.stock}</div>
                                     <div className="flex justify-end">
                                         <button onClick={quantityModalToggle} className="bg-green-500 p-2 rounded-lg text-white">Add to Cart</button>
-
                                         {quantityToggle && (
                                             <Modal>
                                                 <div className="bg-white rounded-lg p-6 w-1/3">
@@ -98,14 +104,14 @@ const ProductByID = () => {
                                                     <form onSubmit={handleSubmit}>
                                                         <div className="flex flex-col mb-4">
                                                             <label>Quantity</label>
-                                                            <input 
-                                                            value={quantity} 
-                                                            type="number"
-                                                            max={product?.stock} 
-                                                            min={1} 
-                                                            onChange={(event) => setQuantity(event.target.value)} 
-                                                            className="border-2 border-gray-300 p-2 rounded" 
-                                                            required 
+                                                            <input
+                                                                value={quantity}
+                                                                type="number"
+                                                                max={product?.stock}
+                                                                min={1}
+                                                                onChange={(event) => setQuantity(event.target.value)}
+                                                                className="border-2 border-gray-300 p-2 rounded"
+                                                                required
                                                             />
                                                         </div>
                                                         <div className="flex justify-end">
@@ -122,15 +128,13 @@ const ProductByID = () => {
                                                 </div>
                                             </Modal>
                                         )}
-
                                     </div>
                                 </div>
-                            )}
-                        </div>
+                            )} */}
                     </div>
                 </Wrapper>
             </div>
-        </main>
+        </MainLayout>
     )
 }
 

@@ -9,21 +9,21 @@ import (
 	"gorm.io/gorm"
 )
 
-func GetUserAddress(c *fiber.Ctx) error {
+func GetAddresses(c *fiber.Ctx) error {
 	userID := convertToUint(c.Locals("user_id"))
 
-	var address []model.Address
-	if err := database.DB.Where("user_id = ?", userID).Find(&address).Error; err != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"message": "failed to fetch address"})
-	}
-	if len(address) == 0 {
-		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"message": "no address"})
+	var user []model.User
+	if err := database.DB.Preload("Address").First(&user, userID).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"message": "user not found"})
+		}
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"message": "failed to fetch user address"})
 	}
 
-	return c.Status(fiber.StatusOK).JSON(address)
+	return c.Status(fiber.StatusOK).JSON(user)
 }
 
-func GetUserAddressByID(c *fiber.Ctx) error {
+func GetAddress(c *fiber.Ctx) error {
 	userID := convertToUint(c.Locals("user_id"))
 
 	id := c.Params("id")
@@ -39,7 +39,7 @@ func GetUserAddressByID(c *fiber.Ctx) error {
 	return c.Status(fiber.StatusOK).JSON(address)
 }
 
-func CreateUserAddress(c *fiber.Ctx) error {
+func CreateAddress(c *fiber.Ctx) error {
 	userID := convertToUint(c.Locals("user_id"))
 
 	var address model.Address
@@ -58,7 +58,7 @@ func CreateUserAddress(c *fiber.Ctx) error {
 	})
 }
 
-func UpdateUserAddress(c *fiber.Ctx) error {
+func UpdateAddress(c *fiber.Ctx) error {
 	userID := convertToUint(c.Locals("user_id"))
 
 	id := c.Params("id")
@@ -85,7 +85,7 @@ func UpdateUserAddress(c *fiber.Ctx) error {
 	})
 }
 
-func DeleteUserAddress(c *fiber.Ctx) error {
+func DeleteAddress(c *fiber.Ctx) error {
 	userID := convertToUint(c.Locals("user_id"))
 
 	id := c.Params("id")

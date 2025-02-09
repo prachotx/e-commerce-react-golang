@@ -11,10 +11,10 @@ type Props = {
 const Pagination = ({ page, total_page, setPage  }: Props) => {
     return (
         <div className="flex justify-between mt-4">
-            <div>{page} / {total_page}</div>
+            <div className="my-btn">{page} / {total_page}</div>
             <div className="text-xl">
-                <button onClick={() => setPage(page - 1)} disabled={page <= 1}><MdKeyboardDoubleArrowLeft /></button>
-                <button onClick={() => setPage(page + 1)} disabled={page >= total_page}><MdKeyboardDoubleArrowRight /></button>
+                <button className="my-btn" onClick={() => setPage(page - 1)} disabled={page <= 1}><MdKeyboardDoubleArrowLeft /></button>
+                <button className="my-btn ml-2" onClick={() => setPage(page + 1)} disabled={page >= total_page}><MdKeyboardDoubleArrowRight /></button>
             </div>
         </div>
     )

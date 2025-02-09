@@ -9,3 +9,7 @@ body {
     font-weight: 400;
     font-style: normal;
 }
+
+.my-btn {
+    @apply bg-[#ff9671] text-white font-medium py-3 px-4 rounded-[20px] shadow uppercase
+}

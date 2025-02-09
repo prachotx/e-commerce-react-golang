@@ -15,7 +15,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func CreateUser(c *fiber.Ctx) error {
+func RegisterUser(c *fiber.Ctx) error {
 	var user model.User
 	if err := c.BodyParser(&user); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"message": "invalid request body"})

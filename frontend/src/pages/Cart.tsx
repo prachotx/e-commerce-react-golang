@@ -1,10 +1,9 @@
 import axios from "axios";
 import Wrapper from "../components/layout/Wrapper"
-import Navbar from "../components/Navbar"
-import { IoIosArrowForward } from "react-icons/io";
 import { useEffect, useState } from "react";
 import { getErrorMessage } from "../utils/getErrorMessage";
 import CartItemList from "../components/CartItemList";
+import MainLayout from "../components/layout/MainLayout";
 
 interface CartItems {
     cart_item_id: number;
@@ -59,16 +58,10 @@ const Cart = () => {
     }
 
     return (
-        <main className="bg-gray-200">
-            <Navbar />
+        <MainLayout>
             <div>
                 <Wrapper>
-                    <div className="py-4">
-                        <div className="flex items-center text-lg mb-4">
-                            <span>home</span>
-                            <span><IoIosArrowForward /></span>
-                            <span>cart</span>
-                        </div>
+                    <div>
                         <div className="bg-white p-4 rounded ">
                             {loading ? (
                                 <div>loading...</div>
@@ -99,7 +92,7 @@ const Cart = () => {
                     </div>
                 </Wrapper>
             </div>
-        </main>
+        </MainLayout>
     )
 }
 

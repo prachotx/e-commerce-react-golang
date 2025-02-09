@@ -28,18 +28,18 @@ func main() {
 		AllowCredentials: true,
 	}))
 
-	app.Post("/users/register", handler.CreateUser)
+	app.Get("/landing", handler.GetPromotedProducts)
+
+	app.Post("/users/register", handler.RegisterUser)
 	app.Post("/users/login", handler.LoginUser)
 	app.Get("/users/profile", middleware.Authenticate, handler.GetUser)
 	app.Put("/users/profile", middleware.Authenticate, handler.UpdateUser)
 
-	app.Get("/users/address", middleware.Authenticate, handler.GetUserAddress)
-	app.Get("/users/address/:id", middleware.Authenticate, handler.GetUserAddressByID)
-	app.Post("/users/address", middleware.Authenticate, handler.CreateUserAddress)
-	app.Put("/users/address/:id", middleware.Authenticate, handler.UpdateUserAddress)
-	app.Delete("/users/address/:id", middleware.Authenticate, handler.DeleteUserAddress)
-
-	app.Get("/landing", handler.GetPromotedProducts)
+	app.Get("/users/address", middleware.Authenticate, handler.GetAddress)
+	app.Get("/users/address/:id", middleware.Authenticate, handler.GetAddress)
+	app.Post("/users/address", middleware.Authenticate, handler.CreateAddress)
+	app.Put("/users/address/:id", middleware.Authenticate, handler.UpdateAddress)
+	app.Delete("/users/address/:id", middleware.Authenticate, handler.DeleteAddress)
 
 	app.Get("/products", handler.GetProducts)
 	app.Get("/products/:id", handler.GetProduct)
@@ -47,6 +47,12 @@ func main() {
 	app.Post("/uploads", middleware.Authenticate, middleware.AuthorizeAdmin, handler.UploadProductImage)
 	app.Put("/products/:id", middleware.Authenticate, middleware.AuthorizeAdmin, handler.UpdateProduct)
 	app.Delete("/products/:id", middleware.Authenticate, middleware.AuthorizeAdmin, handler.DeleteProduct)
+
+	app.Get("/categorys", handler.GetCategorys)
+	app.Get("/categorys/:id", handler.GetCategory)
+	app.Post("/categorys", middleware.Authenticate, middleware.AuthorizeAdmin, handler.CreateCategory)
+	app.Put("/categorys/:id", middleware.Authenticate, middleware.AuthorizeAdmin, handler.CreateCategory)
+	app.Delete("/categorys/:id", middleware.Authenticate, middleware.AuthorizeAdmin, handler.CreateCategory)
 
 	app.Post("/orders/:id", middleware.Authenticate, handler.CreateOrder)
 	app.Get("/orders", middleware.Authenticate, handler.GetOrders)

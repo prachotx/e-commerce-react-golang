@@ -1,16 +1,15 @@
-import { ChangeEvent } from "react"
-
 type Props = {
-    title: string
-    onChange: (event: ChangeEvent) => void
+    placeholder: string
+    nameBtn: string
+    width: string
 }
 
-const InputBox = ({ title, onChange }: Props) => {
+const InputBox = ({ placeholder, nameBtn, width }: Props) => {
     return (
-        <div className="flex flex-col mt-4">
-            <label>{title}</label>
-            <input type="text" onChange={onChange} className="border-2 border-gray-300 p-2 rounded" required />
-        </div>
+        <form className={`flex justify-between mt-16 pl-7 ${width} bg-white  rounded-[25px] shadow`}>
+            <input type="text" className="text-sm text-black outline-none" placeholder={placeholder} required />
+            <button type="submit" className="bg-[#ff9671] rounded-[25px] px-4 py-3 font-medium uppercase text-white hover:bg-violet-500">{nameBtn}</button>
+        </form>
     )
 }
 

@@ -8,6 +8,8 @@ import (
 
 type Product struct {
 	ID          uint           `gorm:"primaryKey" json:"id"`
+	CategoryID  uint           `gorm:"not null" json:"category_id"`
+	Category    Category       `json:"category"`
 	Name        string         `gorm:"size:255;not null" json:"name"`
 	Description string         `gorm:"type:text" json:"description"`
 	Price       float64        `gorm:"not null" json:"price"`

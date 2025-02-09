@@ -9,76 +9,6 @@ import (
 	"gorm.io/gorm"
 )
 
-func CreateOrder(c *fiber.Ctx) error {
-	userID := convertToUint(c.Locals("user_id"))
-
-	var cart model.Cart
-	if err := database.DB.Where("user_id = ?", userID).First(&cart).Error; err != nil {
-		if errors.Is(err, gorm.ErrRecordNotFound) {
-			return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"message": "cart not found"})
-		}
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"message": "failed to fetch cart"})
-	}
-
-	var cartItems []model.CartItem
-	if err := database.DB.Preload("Product").Where("cart_id = ?", cart.ID).Find(&cartItems).Error; err != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"message": "failed to fetch cart items"})
-	}
-	if len(cartItems) == 0 {
-		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"message": "no items in cart"})
-	}
-
-	var totalAmount float64
-	for _, item := range cartItems {
-		totalAmount += float64(item.Quantity) * item.Product.Price
-	}
-
-	id := c.Params("id")
-
-	var address model.Address
-	if err := database.DB.Where("user_id = ? AND id = ?", userID, id).First(&address).Error; err != nil {
-		if errors.Is(err, gorm.ErrRecordNotFound) {
-			return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"message": "address not found"})
-		}
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"message": "failed to fetch address"})
-	}
-
-	order := model.Order{
-		UserID:      userID,
-		TotalAmount: totalAmount,
-		Status:      "pending",
-		Address:     address.Address,
-		Province:    address.Province,
-		District:    address.District,
-		SubDistrict: address.SubDistrict,
-		Postcode:    address.Postcode,
-	}
-	if err := database.DB.Create(&order).Error; err != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"message": "failed to create order"})
-	}
-
-	for _, item := range cartItems {
-		orderItem := model.OrderItem{
-			OrderID:   order.ID,
-			ProductID: item.ProductID,
-			Quantity:  item.Quantity,
-			Price:     float64(item.Quantity) * item.Product.Price,
-		}
-		if err := database.DB.Create(&orderItem).Error; err != nil {
-			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"message": "failed to create order item"})
-		}
-	}
-
-	if err := database.DB.Where("cart_id = ?", cart.ID).Unscoped().Delete(&model.CartItem{}).Error; err != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"message": "failed to delete cart item"})
-	}
-
-	return c.Status(fiber.StatusCreated).JSON(fiber.Map{
-		"message": "create order success !",
-		"order":   order,
-	})
-}
-
 func GetOrders(c *fiber.Ctx) error {
 	userID := convertToUint(c.Locals("user_id"))
 
@@ -164,5 +94,75 @@ func GetOrderDetail(c *fiber.Ctx) error {
 		"limit":       limit,
 		"total":       total,
 		"total_pages": (total + int64(limit) - 1) / int64(limit),
+	})
+}
+
+func CreateOrder(c *fiber.Ctx) error {
+	userID := convertToUint(c.Locals("user_id"))
+
+	var cart model.Cart
+	if err := database.DB.Where("user_id = ?", userID).First(&cart).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"message": "cart not found"})
+		}
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"message": "failed to fetch cart"})
+	}
+
+	var cartItems []model.CartItem
+	if err := database.DB.Preload("Product").Where("cart_id = ?", cart.ID).Find(&cartItems).Error; err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"message": "failed to fetch cart items"})
+	}
+	if len(cartItems) == 0 {
+		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"message": "no items in cart"})
+	}
+
+	var totalAmount float64
+	for _, item := range cartItems {
+		totalAmount += float64(item.Quantity) * item.Product.Price
+	}
+
+	id := c.Params("id")
+
+	var address model.Address
+	if err := database.DB.Where("user_id = ? AND id = ?", userID, id).First(&address).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"message": "address not found"})
+		}
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"message": "failed to fetch address"})
+	}
+
+	order := model.Order{
+		UserID:      userID,
+		TotalAmount: totalAmount,
+		Status:      "pending",
+		Address:     address.Address,
+		Province:    address.Province,
+		District:    address.District,
+		SubDistrict: address.SubDistrict,
+		Postcode:    address.Postcode,
+	}
+	if err := database.DB.Create(&order).Error; err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"message": "failed to create order"})
+	}
+
+	for _, item := range cartItems {
+		orderItem := model.OrderItem{
+			OrderID:   order.ID,
+			ProductID: item.ProductID,
+			Quantity:  item.Quantity,
+			Price:     float64(item.Quantity) * item.Product.Price,
+		}
+		if err := database.DB.Create(&orderItem).Error; err != nil {
+			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"message": "failed to create order item"})
+		}
+	}
+
+	if err := database.DB.Where("cart_id = ?", cart.ID).Unscoped().Delete(&model.CartItem{}).Error; err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"message": "failed to delete cart item"})
+	}
+
+	return c.Status(fiber.StatusCreated).JSON(fiber.Map{
+		"message": "create order success !",
+		"order":   order,
 	})
 }
