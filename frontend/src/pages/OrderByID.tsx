@@ -6,56 +6,11 @@ import axios from "axios"
 import { getErrorMessage } from "../utils/getErrorMessage"
 import Pagination from "../components/Pagination"
 import { IoIosArrowForward } from "react-icons/io";
-
-interface Order {
-    id: number;
-    user_id: number
-    total_amount: number
-    status: string
-    address: string
-    province: string
-    district: string
-    sub_district: string
-    postcode: string
-    created_at: string;
-    updated_at: string;
-}
-
-interface OrderItem {
-    id: number
-    order_id: number
-    product_id: number
-    product: Product
-    quantity: number
-    price: number
-    created_at: string;
-    updated_at: string;
-}
-
-interface Product {
-    id: number;
-    name: string;
-    description: string;
-    price: number;
-    stock: number;
-    discount: number;
-    image_url: string;
-    created_at: string;
-    updated_at: string;
-}
-
-interface OrdersResponse {
-    order: Order;
-    order_items: OrderItem[]
-    limit: number;
-    page: number;
-    total: number;
-    total_page: number;
-}
+import { OrdersItemResponse } from "../types/interfaces"
 
 const OrderByID = () => {
     const id = useParams().id
-    const [orders, setOrders] = useState<OrdersResponse>()
+    const [orders, setOrders] = useState<OrdersItemResponse>()
     const [loading, setLoading] = useState<boolean>(false)
     const [error, setError] = useState<string | null>(null)
     const [page, setPage] = useState<number>(1)

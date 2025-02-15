@@ -4,24 +4,7 @@ import { useEffect, useState } from "react";
 import { getErrorMessage } from "../utils/getErrorMessage";
 import CartItemList from "../components/CartItemList";
 import MainLayout from "../components/layout/MainLayout";
-
-interface CartItems {
-    cart_item_id: number;
-    product_id: number
-    name: string;
-    price: number;
-    quantity: number
-    total: number
-}
-
-interface CartResponse {
-    limit: number;
-    page: number;
-    cart_items: CartItems[];
-    total_amount: number
-    total: number;
-    total_page: number;
-}
+import { CartResponse } from "../types/interfaces";
 
 const Cart = () => {
     const [cart, setCart] = useState<CartResponse>()

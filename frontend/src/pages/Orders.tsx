@@ -6,28 +6,7 @@ import { useEffect, useState } from "react";
 import { getErrorMessage } from "../utils/getErrorMessage";
 import Pagination from "../components/Pagination";
 import OrderList from "../components/OrderList";
-
-interface Order {
-    id: number;
-    user_id: number
-    total_amount: number
-    status: string
-    address: string
-    province: string
-    district: string
-    sub_district: string
-    postcode: string
-    created_at: string;
-    updated_at: string;
-}
-
-interface OrdersResponse {
-    limit: number;
-    page: number;
-    orders: Order[];
-    total: number;
-    total_page: number;
-}
+import { OrdersResponse } from "../types/interfaces";
 
 const Orders = () => {
     const [orders, setOrders] = useState<OrdersResponse>()

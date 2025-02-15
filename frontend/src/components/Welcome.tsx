@@ -9,18 +9,7 @@ import { getErrorMessage } from "../utils/getErrorMessage";
 import { calculatePrice } from "../utils/calculatePrice";
 import { Link, useNavigate } from "react-router";
 import { RiShoppingBag4Line } from "react-icons/ri";
-
-interface Product {
-    id: number;
-    name: string;
-    description: string;
-    price: number;
-    stock: number;
-    discount: number;
-    image_url: string;
-    created_at: string;
-    updated_at: string;
-}
+import { Product } from "../types/interfaces";
 
 const Welcome = () => {
     const [products, setProducts] = useState<Product[]>([])

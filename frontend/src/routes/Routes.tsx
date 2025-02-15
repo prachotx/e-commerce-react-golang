@@ -8,12 +8,19 @@ import Register from "../pages/Register";
 import Products from "../pages/Products";
 import ProductByID from "../pages/ProductByID";
 import Account from "../pages/Account";
-import CreateAddress from "../pages/CreateAddress";
+import AddAddress from "../pages/AddAddress";
 import EditAddress from "../pages/EditAddress";
 import Cart from "../pages/Cart";
-import CreateOrder from "../pages/CreateOrder";
+import CreateOrder from "../pages/AddOrder";
 import Orders from "../pages/Orders";
 import OrderByID from "../pages/OrderByID";
+import ProductAdmin from "../pages/ProductAdmin";
+import AddProduct from "../pages/AddProduct";
+import CategoryAdmin from "../pages/CategoryAdmin";
+import AddCategory from "../pages/AddCategory";
+import EditCategory from "../pages/EditCategory";
+import EditProduct from "../pages/EditProduct";
+import OrderAdmin from "../pages/OrderAdmin";
 
 const Routes = () => {
   const routesForPublic = [
@@ -66,7 +73,7 @@ const Routes = () => {
         },
         {
           path: "/account/address",
-          element: <CreateAddress />,
+          element: <AddAddress />,
         },
         {
           path: "/account/address/:id",
@@ -82,8 +89,32 @@ const Routes = () => {
       element: <RoleBasedRoute />,
       children: [
         {
-          path: "/admin/dashboard",
-          element: <div>Admin Dashboard</div>,
+          path: "/admin/products",
+          element: <ProductAdmin />,
+        },
+        {
+          path: "/admin/add_product",
+          element: <AddProduct />,
+        },
+        {
+          path: "/admin/edit_product/:id",
+          element: <EditProduct />,
+        },
+        {
+          path: "/admin/categorys",
+          element: <CategoryAdmin />,
+        },
+        {
+          path: "/admin/add_category",
+          element: <AddCategory />,
+        },
+        {
+          path: "/admin/edit_category/:id",
+          element: <EditCategory />,
+        },
+        {
+          path: "/admin/orders",
+          element: <OrderAdmin />,
         },
       ],
     },

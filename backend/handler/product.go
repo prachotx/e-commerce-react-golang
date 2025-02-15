@@ -12,6 +12,7 @@ import (
 
 func GetProducts(c *fiber.Ctx) error {
 	search := c.Query("search", "")
+	categoryID := c.QueryInt("category_id", 0)
 	min := c.QueryInt("min", 0)
 	max := c.QueryInt("max", 0)
 	inStock := c.QueryBool("in_stock", false)
@@ -33,6 +34,9 @@ func GetProducts(c *fiber.Ctx) error {
 	if search != "" {
 		query = query.Where("name ILIKE ?", "%"+search+"%")
 	}
+	if categoryID != 0 {
+		query = query.Where("category_id = ?", categoryID)
+	}
 	if min > 0 && max > 0 {
 		query = query.Where("price BETWEEN ? AND ?", min, max)
 	} else if min > 0 {
@@ -51,7 +55,7 @@ func GetProducts(c *fiber.Ctx) error {
 	query.Count(&total)
 
 	var products []model.Product
-	if err := query.Limit(limit).Offset(offset).Find(&products).Error; err != nil {
+	if err := query.Limit(limit).Offset(offset).Preload("Category").Find(&products).Error; err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"message": "failed to fetch products"})
 	}
 	if len(products) == 0 {

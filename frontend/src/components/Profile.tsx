@@ -37,6 +37,11 @@ const Profile = () => {
                             Order
                         </Link>
                     </li>
+                    <li className="p-1">
+                        <Link to="/admin/products">
+                            Dashboard
+                        </Link>
+                    </li>
                     <li onClick={() => {
                         logout()
                         navigate("/")

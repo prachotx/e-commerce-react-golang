@@ -7,32 +7,10 @@ import { IoIosArrowForward } from "react-icons/io";
 import { IoMdAdd } from "react-icons/io";
 import { Link } from "react-router"
 import AddressList from "../components/AddressList"
-
-interface User {
-    id: number
-    username: string
-    email: string
-    password: string
-    role: string
-    created_at: string;
-    updated_at: string;
-}
-
-interface Address {
-    id: number
-    user_id: number
-    user: User
-    address: string
-    province: string
-    district: string
-    sub_district: string
-    postcode: string
-    created_at: string
-    updated_at: string
-}
+import { Address, User } from "../types/interfaces"
 
 const Account = () => {
-    const [user, setUser] = useState<User | null>()
+    const [user, setUser] = useState<User>()
     const [address, setAddress] = useState<Address[]>()
     const [loading, setLoading] = useState<boolean>(false)
     const [error, setError] = useState<string | null>(null)

@@ -51,8 +51,8 @@ func main() {
 	app.Get("/categorys", handler.GetCategorys)
 	app.Get("/categorys/:id", handler.GetCategory)
 	app.Post("/categorys", middleware.Authenticate, middleware.AuthorizeAdmin, handler.CreateCategory)
-	app.Put("/categorys/:id", middleware.Authenticate, middleware.AuthorizeAdmin, handler.CreateCategory)
-	app.Delete("/categorys/:id", middleware.Authenticate, middleware.AuthorizeAdmin, handler.CreateCategory)
+	app.Put("/categorys/:id", middleware.Authenticate, middleware.AuthorizeAdmin, handler.UpdateCategory)
+	app.Delete("/categorys/:id", middleware.Authenticate, middleware.AuthorizeAdmin, handler.DateleCategory)
 
 	app.Post("/orders/:id", middleware.Authenticate, handler.CreateOrder)
 	app.Get("/orders", middleware.Authenticate, handler.GetOrders)
