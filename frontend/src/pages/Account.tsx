@@ -7,11 +7,10 @@ import { IoIosArrowForward } from "react-icons/io";
 import { IoMdAdd } from "react-icons/io";
 import { Link } from "react-router"
 import AddressList from "../components/AddressList"
-import { Address, User } from "../types/interfaces"
+import { User } from "../types/interfaces"
 
 const Account = () => {
     const [user, setUser] = useState<User>()
-    const [address, setAddress] = useState<Address[]>()
     const [loading, setLoading] = useState<boolean>(false)
     const [error, setError] = useState<string | null>(null)
 
@@ -19,25 +18,10 @@ const Account = () => {
         try {
             setLoading(true)
             setError(null)
-            const res = await axios.get("http://localhost:8080/users/profile", {
-                withCredentials: true
-            })
-            setUser(res.data)
-        } catch (err) {
-            setError(getErrorMessage(err))
-        } finally {
-            setLoading(false)
-        }
-    }
-
-    const fetchAddress = async () => {
-        try {
-            setLoading(true)
-            setError(null)
             const res = await axios.get("http://localhost:8080/users/address", {
                 withCredentials: true
             })
-            setAddress(res.data)
+            setUser(res.data[0])
         } catch (err) {
             setError(getErrorMessage(err))
         } finally {
@@ -47,7 +31,6 @@ const Account = () => {
 
     useEffect(() => {
         fetchUser()
-        fetchAddress()
     }, [])
 
     return (
@@ -74,7 +57,7 @@ const Account = () => {
                                         <div>{user?.role}</div>
                                     </div>
                                     <div>
-                                        {address?.map((item) => (
+                                        {user?.addresses.map((item) => (
                                            <AddressList 
                                            key={item.id} 
                                            id={item.id} 
@@ -83,7 +66,7 @@ const Account = () => {
                                            district={item.district}
                                            subDistrict={item.sub_district}
                                            postCode={item.postcode}  
-                                           fetchAddress={fetchAddress} />
+                                           fetchUser={fetchUser} />
                                         ))}
                                     </div>
                                 </>

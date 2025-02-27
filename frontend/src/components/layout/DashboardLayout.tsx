@@ -1,9 +1,10 @@
 import { ReactNode } from "react"
-import { NavLink } from "react-router"
+import { Link, NavLink } from "react-router"
 import { MdStorefront } from "react-icons/md";
 import { BiCategory } from "react-icons/bi";
 import { FaRegStar } from "react-icons/fa";
 import { FaStar } from "react-icons/fa";
+import { ToastContainer } from "react-toastify";
 
 type Props = {
     children: ReactNode
@@ -15,7 +16,9 @@ const DashBoardLayout = ({ children, title }: Props) => {
         <main className="flex h-screen">
             <aside className="w-[430px] bg-violet-500">
                 <div className="text-white">
-                    <h1 className="text-3xl py-4 px-6 font-medium">LUGX</h1>
+                    <Link to="/">
+                        <h1 className="text-3xl py-4 px-6 font-medium">LUGX</h1>
+                    </Link>
                     <ul className="font-medium">
                         <li>
                             <NavLink to="/admin/products"
@@ -52,7 +55,7 @@ const DashBoardLayout = ({ children, title }: Props) => {
             </aside>
             <div className="w-full py-4 px-6">
                 <h1 className="text-2xl font-medium">{title}</h1>
-                <a href="" className="block bg-violet-500 text-white rounded-[20px] my-6">
+                <a href="https://github.com/prachotx/e-commerce-react-golang" target="_blank" className="block bg-violet-500 text-white rounded-[20px] my-6">
                     <div className="flex items-center py-4 px-6">
                         <FaStar className="mr-4" />
                         <h3>Star this Project on GitHub</h3>
@@ -60,6 +63,7 @@ const DashBoardLayout = ({ children, title }: Props) => {
                 </a>
                 {children}
             </div>
+            <ToastContainer />
         </main>
     )
 }

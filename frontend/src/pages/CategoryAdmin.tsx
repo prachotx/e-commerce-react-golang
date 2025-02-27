@@ -5,18 +5,27 @@ import { useEffect, useState } from "react"
 import { getErrorMessage } from "../utils/getErrorMessage"
 import { CategoryResponse } from "../types/interfaces"
 import Pagination from "../components/Pagination"
+import Loading from "../components/Loading"
+import { alertSuccess } from "../utils/alertSuccess"
+import { alertError } from "../utils/alertError"
 
 const CategoryAdmin = () => {
     const [categorys, setCategorys] = useState<CategoryResponse>()
     const [page, setPage] = useState<number>(1)
+    const [loading, setLoadng] = useState<boolean>(false)
+    const [error, setError] = useState<string | null>(null)
 
     const fetchCategory = async () => {
         try {
+            setLoadng(true)
+            setError(null)
             const query = new URLSearchParams({ page: String(page) })
             const res = await axios.get(`http://localhost:8080/categorys?${query}`)
             setCategorys(res.data)
         } catch (err) {
             alert(getErrorMessage(err));
+        } finally {
+            setLoadng(false)
         }
     }
 
@@ -24,9 +33,9 @@ const CategoryAdmin = () => {
         try {
             const res = await axios.delete(`http://localhost:8080/categorys/${id}`, { withCredentials: true })
             fetchCategory()
-            alert(res.data.message)
+            alertSuccess(res.data.message)
         } catch (err) {
-            console.log(err)
+            alertError(getErrorMessage(err))
         }
     }
 
@@ -37,34 +46,40 @@ const CategoryAdmin = () => {
     return (
         <DashBoardLayout title="Category">
             <Link to="/admin/add_category">
-                <button className="bg-green-300 p-2">add category</button>
+                <button className="bg-green-300 p-2 rounded">Add Category</button>
             </Link>
-            <table className="w-full border-2 border-gray-200">
-                <thead className="border-2 border-gray-200">
-                    <tr>
-                        <td>name</td>
-                        <td>product</td>
-                        <td>create_at</td>
-                        <td>opt</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    {categorys?.categorys.map((item) => (
+            {loading ? (
+                <Loading />
+            ) : error ? (
+                <div>error</div>
+            ) : (
+                <table className="w-full mt-6">
+                    <thead className="border-2 border-gray-400 bg-gray-100">
                         <tr>
-                            <td>{item.name}</td>
-                            <td>{item.products.length}</td>
-                            <td>{item.created_at}</td>
-                            <td>
-                                <Link to={`/admin/edit_category/${item.id}`}>
-                                    <button className="bg-yellow-300 p-2">edit</button>
-                                </Link>
-                                <button onClick={() => handleDelete(item.id)} className="bg-red-300 p-2">delete</button>
-                            </td>
+                            <td>name</td>
+                            <td>product</td>
+                            <td>create_at</td>
+                            <td>opt</td>
                         </tr>
-                    ))}
-                </tbody>
-                <Pagination page={categorys?.page || 1} total_page={categorys?.total_page || 1} setPage={setPage} />
-            </table>
+                    </thead>
+                    <tbody>
+                        {categorys?.categorys.map((item) => (
+                            <tr className="border-2 border-gray-400">
+                                <td>{item.name}</td>
+                                <td>{item.products.length}</td>
+                                <td>{item.created_at}</td>
+                                <td>
+                                    <Link to={`/admin/edit_category/${item.id}`}>
+                                        <button className="bg-yellow-300 p-2 rounded mr-2">edit</button>
+                                    </Link>
+                                    <button onClick={() => handleDelete(item.id)} className="bg-red-300 p-2 rounded">delete</button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            )}
+            <Pagination page={categorys?.page || 1} total_page={categorys?.total_page || 1} setPage={setPage} />
         </DashBoardLayout>
     )
 }

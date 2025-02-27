@@ -25,7 +25,7 @@ function Login() {
             );
             const token = res.data.token
             setToken(token)
-            navigate("/")
+            navigate("/", { state: { successMessage: res.data.message } })
         } catch (err) {
             const message = getErrorMessage(err)
             if (message == "user not found") {

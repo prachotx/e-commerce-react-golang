@@ -3,7 +3,6 @@ import { Link, NavLink } from "react-router";
 import { PiShoppingCart } from "react-icons/pi";
 import { useAuth } from "../providers/authProvider";
 import Profile from "./Profile";
-import Logo from "./Logo";
 
 const Navbar = () => {
   const { token } = useAuth()
@@ -12,7 +11,9 @@ const Navbar = () => {
     <nav className="bg-violet-500 text-white">
       <Wrapper>
         <div className="flex items-center justify-between h-24">
-          <Logo />
+        <h1 className="flex items-center">
+            <span className="text-3xl ml-2 font-semibold">LUGX</span>
+        </h1>
           <ul className="flex items-center gap-4">
             <li>
               <NavLink

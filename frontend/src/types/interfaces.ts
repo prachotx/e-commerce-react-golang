@@ -101,6 +101,7 @@ export interface User {
     email: string
     password: string
     role: string
+    addresses: Address[]
     created_at: string;
     updated_at: string;
 }

@@ -19,7 +19,6 @@ func main() {
 	database.DB.AutoMigrate(&model.OrderItem{})
 	database.DB.AutoMigrate(&model.Cart{})
 	database.DB.AutoMigrate(&model.CartItem{})
-	// database.DB.AutoMigrate(&Payment{})
 
 	app := fiber.New()
 
@@ -35,7 +34,7 @@ func main() {
 	app.Get("/users/profile", middleware.Authenticate, handler.GetUser)
 	app.Put("/users/profile", middleware.Authenticate, handler.UpdateUser)
 
-	app.Get("/users/address", middleware.Authenticate, handler.GetAddress)
+	app.Get("/users/address", middleware.Authenticate, handler.GetAddresses)
 	app.Get("/users/address/:id", middleware.Authenticate, handler.GetAddress)
 	app.Post("/users/address", middleware.Authenticate, handler.CreateAddress)
 	app.Put("/users/address/:id", middleware.Authenticate, handler.UpdateAddress)
@@ -54,9 +53,10 @@ func main() {
 	app.Put("/categorys/:id", middleware.Authenticate, middleware.AuthorizeAdmin, handler.UpdateCategory)
 	app.Delete("/categorys/:id", middleware.Authenticate, middleware.AuthorizeAdmin, handler.DateleCategory)
 
-	app.Post("/orders/:id", middleware.Authenticate, handler.CreateOrder)
-	app.Get("/orders", middleware.Authenticate, handler.GetOrders)
+	app.Get("/orders", middleware.Authenticate, handler.GetUserOrders)
 	app.Get("/orders/:id", middleware.Authenticate, handler.GetOrderDetail)
+	app.Get("/admin_orders", middleware.Authenticate, middleware.AuthorizeAdmin, handler.GetAllOrders)
+	app.Post("/orders/:id", middleware.Authenticate, handler.CreateOrder)
 
 	app.Get("/cart", middleware.Authenticate, handler.GetCartItems)
 	app.Post("/cart", middleware.Authenticate, handler.CreateCartItem)

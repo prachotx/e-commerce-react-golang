@@ -17,7 +17,10 @@ const CreateOrder = () => {
             setLoading(true)
             setError(null)
             const res = await axios.get("http://localhost:8080/users/address", { withCredentials: true })
-            setAddress(res.data)
+            setAddress(res.data[0].addresses)
+            if (res.data[0].addresses) {
+                setSelectAddress(res.data[0].addresses[0].id)
+            }
         } catch (err) {
             setError(getErrorMessage(err))
         } finally {
@@ -30,7 +33,7 @@ const CreateOrder = () => {
         try {
             setLoading(true)
             setError(null)
-            const res = await axios.post(`http://localhost:8080/orders/${selectAddress}`, { withCredentials: true })
+            const res = await axios.post(`http://localhost:8080/orders/${selectAddress}`, {}, { withCredentials: true })
             alert(res.data.message)
         } catch (err) {
             setError(getErrorMessage(err))

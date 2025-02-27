@@ -9,7 +9,42 @@ import (
 	"gorm.io/gorm"
 )
 
-func GetOrders(c *fiber.Ctx) error {
+func GetAllOrders(c *fiber.Ctx) error {
+	// pagination
+	page := c.QueryInt("page", 1)
+	limit := c.QueryInt("limit", 10)
+	if page < 1 {
+		page = 1
+	}
+	if limit < 1 {
+		limit = 10
+	}
+	offset := (page - 1) * limit
+	//
+
+	query := database.DB.Model(&model.Order{})
+
+	var total int64
+	query.Count(&total)
+
+	var orders []model.Order
+	if err := query.Limit(limit).Offset(offset).Find(&orders).Error; err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"message": "failed to fetch orders"})
+	}
+	if len(orders) == 0 {
+		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"message": "no orders"})
+	}
+
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{
+		"orders":      orders,
+		"page":        page,
+		"limit":       limit,
+		"total":       total,
+		"total_pages": (total + int64(limit) - 1) / int64(limit),
+	})
+}
+
+func GetUserOrders(c *fiber.Ctx) error {
 	userID := convertToUint(c.Locals("user_id"))
 
 	// pagination

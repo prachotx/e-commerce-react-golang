@@ -41,8 +41,7 @@ const AddProduct = () => {
                 stock,
                 discount
             }, { withCredentials: true })
-            alert(res.data.message)
-            navigate("/admin/products")
+            navigate("/admin/products", { state: { successMessage: res.data.message } })
         } catch (err) {
             alert(getErrorMessage(err))
         }

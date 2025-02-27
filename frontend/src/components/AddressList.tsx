@@ -13,10 +13,10 @@ type Props = {
     district: string
     subDistrict: string
     postCode: string
-    fetchAddress: () => void
+    fetchUser: () => void
 }
 
-const AddressList = ({ id, address, province, district, subDistrict, postCode, fetchAddress }: Props) => {
+const AddressList = ({ id, address, province, district, subDistrict, postCode, fetchUser }: Props) => {
     const [deleteToggle, setDeleteToggle] = useState<boolean>(false)
 
     const deleteModalToggle = () => {
@@ -26,7 +26,7 @@ const AddressList = ({ id, address, province, district, subDistrict, postCode, f
     const deleteAddress = async () => {
         try {
             const res = await axios.delete(`http://localhost:8080/users/address/${id}`, { withCredentials: true })
-            fetchAddress()
+            fetchUser()
             alert(res.data.message)
         } catch (err) {
             console.log(getErrorMessage(err));

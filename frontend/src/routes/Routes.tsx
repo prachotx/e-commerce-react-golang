@@ -21,6 +21,7 @@ import AddCategory from "../pages/AddCategory";
 import EditCategory from "../pages/EditCategory";
 import EditProduct from "../pages/EditProduct";
 import OrderAdmin from "../pages/OrderAdmin";
+import OrderByIDAdmin from "../pages/OrderByIDAdmin";
 
 const Routes = () => {
   const routesForPublic = [
@@ -115,6 +116,10 @@ const Routes = () => {
         {
           path: "/admin/orders",
           element: <OrderAdmin />,
+        },
+        {
+          path: "/admin/orders/:id",
+          element: <OrderByIDAdmin />,
         },
       ],
     },

@@ -22,6 +22,11 @@ interface AuthContextType {
     setToken: (newToken: string) => void
     user: User | null
     logout: () => void
+    loading: boolean
+}
+
+type Props = {
+    children: ReactNode
 }
 
 const AuthContext = createContext<AuthContextType>({
@@ -29,15 +34,13 @@ const AuthContext = createContext<AuthContextType>({
     setToken: () => {},
     user: null,
     logout: () => {},
-});
-
-type Props = {
-    children: ReactNode
-}
+    loading: true
+})
 
 const AuthProvider = ({ children }: Props) => {
     const [token, setToken_] = useState<string | null>(Cookies.get("jwt") || null)
     const [user, setUser] = useState<{ [key: string]: any } | null>(null)
+    const [loading, setLoading] = useState<boolean>(true)
 
     useEffect(() => {
         if (token) {
@@ -52,6 +55,7 @@ const AuthProvider = ({ children }: Props) => {
             delete axios.defaults.headers.common["authorization"]
             setUser(null)
         }
+        setLoading(false)
     }, [token])
 
     const setToken = (newToken: string) => {
@@ -69,9 +73,10 @@ const AuthProvider = ({ children }: Props) => {
             token,
             setToken,
             user,
-            logout
+            logout,
+            loading
         }
-    ), [token, user])
+    ), [token, user, loading])
 
     return (
         <AuthContext.Provider value={contextValue as AuthContextType}>
