@@ -30,6 +30,7 @@ export interface Product {
 export interface ProductsResponse {
     limit: number;
     page: number;
+    categorys: Category[];
     products: Product[];
     total: number;
     total_page: number;

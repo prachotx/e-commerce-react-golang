@@ -6,6 +6,7 @@ import { getErrorMessage } from "../utils/getErrorMessage"
 import Pagination from "../components/Pagination"
 import Loading from "../components/Loading"
 import { Link } from "react-router"
+import { BiSearch } from "react-icons/bi";
 
 const OrderAdmin = () => {
     const [orders, setOrders] = useState<OrdersResponse>()
@@ -18,7 +19,9 @@ const OrderAdmin = () => {
             setLoadng(true)
             setError(null)
             const query = new URLSearchParams({ page: String(page) })
-            const res = await axios.get(`http://localhost:8080/admin_orders?${query}`, { withCredentials: true })
+            const res = await axios.get(`http://localhost:8080/admin/orders?${query}`, { withCredentials: true })
+            console.log(res.data);
+
             setOrders(res.data)
         } catch (err) {
             setError(getErrorMessage(err));
@@ -42,16 +45,24 @@ const OrderAdmin = () => {
                     <thead className="border-2 border-gray-400 bg-gray-100">
                         <tr>
                             <td>total_amount</td>
-                            <td>product</td>
+                            <td>status</td>
                             <td>create_at</td>
+                            <td>view</td>
                         </tr>
                     </thead>
                     <tbody>
                         {orders?.orders.map((item) => (
                             <tr className="border-2 border-gray-400">
-                                <td><Link to={`/admin/orders/${item.id}`}>{item.total_amount}</Link></td>
-                                <td><button className="bg-sky-300 inline p-2 rounded">{item.status}</button></td>
+                                <td>{item.total_amount}</td>
+                                <td>{item.status}</td>
                                 <td>{item.created_at}</td>
+                                <td>
+                                    <Link to={`/admin/orders/${item.id}`}>
+                                        <button className="text-2xl bg-sky-400 block p-2 rounded-lg">
+                                            <BiSearch />
+                                        </button>
+                                    </Link>
+                                </td>
                             </tr>
                         ))}
                     </tbody>

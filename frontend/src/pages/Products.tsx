@@ -53,32 +53,31 @@ function Products() {
                 <Wrapper>
                     <div>
                         <form onSubmit={handleSubmit}>
-                            <div className="flex items-center rounded border-2 border-gray-300">
-                                    <input type="text" onChange={event => setSearch(event.target.value)} className="outline-none px-2 rounded-full" />
-                                    <button type="submit" className="bg-gray-300 text-lg p-2"><BiSearch /></button>
-                                </div>
-                            <form className={`flex justify-between pl-7 mb-6 max-w-[450px] bg-gray-100 rounded-[25px] shadow`}>
-                                <input type="text" className="text-sm text-black outline-none bg-gray-100" placeholder="Search" />
+                            <div className={`flex justify-between pl-7 mb-6 max-w-[450px] bg-gray-100 rounded-[25px] shadow`}>
+                                <input type="text" onChange={event => setSearch(event.target.value)} className="text-sm text-black outline-none bg-gray-100 w-full" placeholder="Search" />
                                 <button type="submit" className="bg-[#ff9671] rounded-[25px] text-xl px-6 py-3 font-medium uppercase text-white hover:bg-violet-500"><BiSearch /></button>
-                            </form>
-                            <div>
-                                <button className="my-btn mr-4">Highest</button>
+                            </div>
+                            <div className="flex flex-wrap gap-6">
+                                {products?.categorys.map((item) => (
+                                    <button key={item.id} className="my-btn">{item.name}</button>
+                                ))}
+                                <button className="my-btn">Highest</button>
                                 <button className="my-btn">Lowest</button>
                             </div>
-                            <select onChange={event => setSort(event.target.value)} className="ml-4 border-2 border-gray-300 rounded p-1">
-                                    <option value="desc">Highest Price</option>
-                                    <option value="asc">Lowest Price</option>
-                                </select>
-                                <select onChange={(event) => {
-                                    let str = event.target.value
-                                    let result = str.split(" ")
-                                    setMax(Number(result[0]))
-                                    setMin(Number(result[1]))
-                                }} className="ml-4 border-2 border-gray-300 rounded p-1">
-                                    <option value="0 0">Select Price Range</option>
-                                    <option value="1500 500">1500 - 500</option>
-                                    <option value="500 0">500 - 0</option>
-                                </select>
+                            {/* <select onChange={event => setSort(event.target.value)} className="ml-4 border-2 border-gray-300 rounded p-1">
+                                <option value="desc">Highest Price</option>
+                                <option value="asc">Lowest Price</option>
+                            </select>
+                            <select onChange={(event) => {
+                                let str = event.target.value
+                                let result = str.split(" ")
+                                setMax(Number(result[0]))
+                                setMin(Number(result[1]))
+                            }} className="ml-4 border-2 border-gray-300 rounded p-1">
+                                <option value="0 0">Select Price Range</option>
+                                <option value="1500 500">1500 - 500</option>
+                                <option value="500 0">500 - 0</option>
+                            </select> */}
                         </form>
                         {loading ? (
                             <div>Loading...</div>

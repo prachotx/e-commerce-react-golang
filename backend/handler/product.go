@@ -62,7 +62,13 @@ func GetProducts(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"message": "no product in store"})
 	}
 
+	var categorys []model.Category
+	if err := database.DB.Find(&categorys).Error; err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"message": "failed to fetch categorys"})
+	}
+
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
+		"categorys":  categorys,
 		"products":   products,
 		"page":       page,
 		"limit":      limit,
