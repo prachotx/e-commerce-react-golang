@@ -5,10 +5,11 @@ import { IoIosArrowForward } from "react-icons/io";
 import Footer from "../Footer";
 
 type Props = {
-    children: ReactNode
+    children: ReactNode,
+    title: string
 }
 
-const MainLayout = ({ children }: Props) => {
+const MainLayout = ({ children, title }: Props) => {
     return (
         <main className="p-2">
             <Navbar />
@@ -16,11 +17,11 @@ const MainLayout = ({ children }: Props) => {
                 <Wrapper>
                     <div className="h-[250px] flex items-center justify-center text-white">
                         <div>
-                            <h2 className="uppercase text-5xl font-bold mb-6">Shop</h2>
+                            <h2 className="uppercase text-5xl font-bold mb-6">{title}</h2>
                             <p className="flex items-center justify-center">
                                 <span>Home</span>
                                 <span><IoIosArrowForward /></span>
-                                <span>Shop</span>
+                                <span>{title}</span>
                             </p>
                         </div>
                     </div>

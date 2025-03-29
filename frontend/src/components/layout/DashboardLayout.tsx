@@ -13,7 +13,7 @@ type Props = {
 
 const DashBoardLayout = ({ children, title }: Props) => {
     return (
-        <main className="flex h-screen">
+        <main className="flex min-h-screen">
             <aside className="w-[430px] bg-violet-500">
                 <div className="text-white">
                     <Link to="/">

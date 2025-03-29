@@ -4,12 +4,13 @@ import { RiShoppingBag4Line } from "react-icons/ri";
 
 type Props = {
     id: number
+    category: string
     name: string
     price: number
     discount: number
 }
 
-const ProductList = ({ id, name, price, discount }: Props) => {
+const ProductList = ({ id, category, name, price, discount }: Props) => {
     return (
         <Link key={id} to={`/products/${id}`} className="bg-gray-100 rounded-[25px] overflow-hidden relative">
             <img className="rounded-[25px]" src="https://placehold.co/600x400" alt="" />
@@ -19,7 +20,7 @@ const ProductList = ({ id, name, price, discount }: Props) => {
             </div>
             <div className="p-6 flex items-center justify-between">
                 <div>
-                    <p className="text-gray-500">Action</p>
+                    <p className="text-gray-500">{category}</p>
                     <h4 className="font-semibold">{name}</h4>
                 </div>
                 <button className="bg-[#ff9671] flex items-center justify-center w-[45px] h-[45px] rounded-full text-white text-2xl"><RiShoppingBag4Line /></button>

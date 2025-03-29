@@ -57,7 +57,7 @@ const ProductByID = () => {
     }
 
     return (
-        <MainLayout>
+        <MainLayout title="Shop">
             <div>
                 <Wrapper>
                     <div className="flex justify-between">
@@ -79,7 +79,7 @@ const ProductByID = () => {
                                     <p>{product?.description} Lorem, ipsum dolor sit amet consectetur adipisicing elit. Blanditiis dignissimos ipsa sapiente perspiciatis amet quod in quasi nesciunt dolor fuga!</p>
                                     <div className="flex items-center mt-6 gap-4">
                                         <div className="bg-gray-100 p-4 rounded-[25px]">
-                                            <input type="text" onChange={event => setQuantity(event.target.value)} className="bg-gray-100 w-8 outline-none text-center" />
+                                            <input type="text" defaultValue={1} onChange={event => setQuantity(event.target.value)} className="bg-gray-100 w-8 outline-none text-center" />
                                         </div>
                                         <button onClick={handleSubmit} className="my-btn flex items-center"><RiShoppingBag4Line className="text-xl mr-2" />Add to Cart</button>
                                     </div>

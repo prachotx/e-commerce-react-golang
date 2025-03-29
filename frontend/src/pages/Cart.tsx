@@ -41,7 +41,7 @@ const Cart = () => {
     }
 
     return (
-        <MainLayout>
+        <MainLayout title="Cart">
             <div>
                 <Wrapper>
                     <div>

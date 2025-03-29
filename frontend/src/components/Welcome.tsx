@@ -10,6 +10,8 @@ import { calculatePrice } from "../utils/calculatePrice";
 import { Link, useNavigate } from "react-router";
 import { RiShoppingBag4Line } from "react-icons/ri";
 import { Product } from "../types/interfaces";
+import Loading from "./Loading";
+import Error from "./Error";
 
 const Welcome = () => {
     const [products, setProducts] = useState<Product[]>([])
@@ -109,32 +111,34 @@ const Welcome = () => {
                             <h3 className="text-4xl font-bold">Discount Games</h3>
                             <Link to="/products" className="my-btn">View All</Link>
                         </div>
-                        <div className="grid grid-cols-4 mt-12 gap-6">
-                            {loading ? (
-                                <div>loading...</div>
-                            ) : error ? (
-                                <div>{error}</div>
-                            ) : (
-                                <>
-                                    {products.map((item) => (
-                                        <Link key={item.id} to={`/products/${item.id}`} className="bg-gray-100 rounded-[25px] overflow-hidden relative">
-                                            <img className="rounded-[25px]" src="https://placehold.co/600x400" alt="" />
-                                            <div className="bg-violet-500 text-white absolute top-4 right-4 px-4 py-2 rounded-[10px]">
-                                                <h6 className="text-right line-through">${item.price}</h6>
-                                                <h6 className="text-lg font-semibold">${calculatePrice(item.price, item.discount)}</h6>
+                        {loading ? (
+                            <div className="flex items-center justify-center h-[400px]">
+                                <Loading />
+                            </div>
+                        ) : error ? (
+                            <div className="flex items-center justify-center h-[400px]">
+                                <Error message={error} />
+                            </div>
+                        ) : (
+                            <div className="grid grid-cols-4 mt-12 gap-6">
+                                {products.map((item) => (
+                                    <Link key={item.id} to={`/products/${item.id}`} className="bg-gray-100 rounded-[25px] overflow-hidden relative">
+                                        <img className="rounded-[25px]" src="https://placehold.co/600x400" alt="" />
+                                        <div className="bg-violet-500 text-white absolute top-4 right-4 px-4 py-2 rounded-[10px]">
+                                            <h6 className="text-right line-through">${item.price}</h6>
+                                            <h6 className="text-lg font-semibold">${calculatePrice(item.price, item.discount)}</h6>
+                                        </div>
+                                        <div className="p-6 flex items-center justify-between">
+                                            <div>
+                                                <p className="text-gray-500">Action</p>
+                                                <h4 className="font-semibold">{item.name}</h4>
                                             </div>
-                                            <div className="p-6 flex items-center justify-between">
-                                                <div>
-                                                    <p className="text-gray-500">Action</p>
-                                                    <h4 className="font-semibold">{item.name}</h4>
-                                                </div>
-                                                <button className="bg-[#ff9671] flex items-center justify-center w-[45px] h-[45px] rounded-full text-white text-2xl"><RiShoppingBag4Line /></button>
-                                            </div>
-                                        </Link>
-                                    ))}
-                                </>
-                            )}
-                        </div>
+                                            <button className="bg-[#ff9671] flex items-center justify-center w-[45px] h-[45px] rounded-full text-white text-2xl"><RiShoppingBag4Line /></button>
+                                        </div>
+                                    </Link>
+                                ))}
+                            </div>
+                        )}
                     </div>
                 </Wrapper>
             </div>
