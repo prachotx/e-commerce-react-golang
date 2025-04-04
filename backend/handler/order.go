@@ -132,7 +132,7 @@ func GetOrderDetail(c *fiber.Ctx) error {
 	})
 }
 
-func CreateOrder(c *fiber.Ctx) error {
+func CreateOrders(c *fiber.Ctx) error {
 	userID := convertToUint(c.Locals("user_id"))
 
 	var cart model.Cart
@@ -156,14 +156,9 @@ func CreateOrder(c *fiber.Ctx) error {
 		totalAmount += float64(item.Quantity) * item.Product.Price
 	}
 
-	id := c.Params("id")
-
 	var address model.Address
-	if err := database.DB.Where("user_id = ? AND id = ?", userID, id).First(&address).Error; err != nil {
-		if errors.Is(err, gorm.ErrRecordNotFound) {
-			return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"message": "address not found"})
-		}
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"message": "failed to fetch address"})
+	if err := c.BodyParser(&address); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"message": "invalid request body"})
 	}
 
 	order := model.Order{
@@ -193,6 +188,66 @@ func CreateOrder(c *fiber.Ctx) error {
 	}
 
 	if err := database.DB.Where("cart_id = ?", cart.ID).Unscoped().Delete(&model.CartItem{}).Error; err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"message": "failed to delete cart item"})
+	}
+
+	return c.Status(fiber.StatusCreated).JSON(fiber.Map{
+		"message": "create order success !",
+		"order":   order,
+	})
+}
+
+func CreateOrder(c *fiber.Ctx) error {
+	userID := convertToUint(c.Locals("user_id"))
+
+	var req struct {
+		ProductID   uint   `json:"product_id"`
+		Quantity    int    `json:"quantity"`
+		Address     string `json:"address"`
+		Province    string `json:"province"`
+		District    string `json:"district"`
+		SubDistrict string `json:"sub_district"`
+		Postcode    string `json:"postcode"`
+	}
+
+	if err := c.BodyParser(&req); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "invalid request body"})
+	}
+
+	var product model.Product
+	if err := database.DB.First(&product, req.ProductID).Error; err != nil {
+		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"error": "product not found"})
+	}
+
+	totalAmount := float64(req.Quantity) * product.Price
+
+	order := model.Order{
+		UserID:      userID,
+		TotalAmount: totalAmount,
+		Status:      "pending",
+		Address:     req.Address,
+		Province:    req.Province,
+		District:    req.District,
+		SubDistrict: req.SubDistrict,
+		Postcode:    req.Postcode,
+	}
+
+	if err := database.DB.Create(&order).Error; err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "failed to create order"})
+	}
+
+	orderItem := model.OrderItem{
+		OrderID:   order.ID,
+		ProductID: req.ProductID,
+		Quantity:  req.Quantity,
+		Price:     totalAmount,
+	}
+
+	if err := database.DB.Create(&orderItem).Error; err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "failed to create order item"})
+	}
+
+	if err := database.DB.Where("user_id = ? AND product_id = ?", userID, req.ProductID).Unscoped().Delete(&model.CartItem{}).Error; err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"message": "failed to delete cart item"})
 	}
 

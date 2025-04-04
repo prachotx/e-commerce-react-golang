@@ -56,7 +56,8 @@ func main() {
 	app.Get("/orders", middleware.Authenticate, handler.GetUserOrders)
 	app.Get("/orders/:id", middleware.Authenticate, handler.GetOrderDetail)
 	app.Get("/admin/orders", middleware.Authenticate, middleware.AuthorizeAdmin, handler.GetAllOrders)
-	app.Post("/orders/:id", middleware.Authenticate, handler.CreateOrder)
+	app.Post("/orders", middleware.Authenticate, handler.CreateOrders)
+	app.Post("/orders/single", middleware.Authenticate, handler.CreateOrder)
 
 	app.Get("/cart", middleware.Authenticate, handler.GetCartItems)
 	app.Post("/cart", middleware.Authenticate, handler.CreateCartItem)
